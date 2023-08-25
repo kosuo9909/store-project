@@ -7,3 +7,11 @@
 a {
   text-decoration: none;
 }
+
+.test {
+  margin: 0 auto;
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
