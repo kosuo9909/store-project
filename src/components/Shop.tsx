@@ -1,13 +1,7 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import SingleListing from './SingleListing';
 
-const storage = {
+const mockedStorage = {
   brand: 'Ford Escort',
   price: 1444,
   year: 1992,
@@ -24,7 +18,7 @@ const storage = {
 export default function Shop() {
   return (
     <div className='test'>
-      <SingleListing details={storage} />
+      <SingleListing details={mockedStorage} />
     </div>
   );
 }
