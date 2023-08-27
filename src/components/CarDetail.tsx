@@ -1,5 +1,4 @@
 import { RootState } from './interfaces/interfaces';
-import './CarDetail.scss';
 import SingleListing from './SingleListing';
 import { useSelector } from 'react-redux';
 
