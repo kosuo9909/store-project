@@ -66,6 +66,7 @@ const AddVehicle: React.FC<IAddVehicle> = ({
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
     if (Object.values(formData).some(checkEmpty)) {
       setError(true);
     } else {
@@ -79,6 +80,7 @@ const AddVehicle: React.FC<IAddVehicle> = ({
 
   const handleEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
     if (Object.values(formData).some(checkEmpty)) {
       setError(true);
     } else {
@@ -94,6 +96,7 @@ const AddVehicle: React.FC<IAddVehicle> = ({
 
   const handleClear = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
     setFormData(initialFormData);
   };
 
@@ -114,6 +117,7 @@ const AddVehicle: React.FC<IAddVehicle> = ({
         {textFields.map(([name, label]) =>
           name === 'description' ? (
             <TextField
+             
               error={formData[name as keyof ICar] === '' && error}
               helperText={
                 formData[name as keyof ICar] === '' &&
@@ -134,6 +138,7 @@ const AddVehicle: React.FC<IAddVehicle> = ({
             />
           ) : (
             <TextField
+              
               error={formData[name as keyof ICar] === '' && error}
               helperText={
                 formData[name as keyof ICar] === '' &&

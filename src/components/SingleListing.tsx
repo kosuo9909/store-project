@@ -18,10 +18,7 @@ interface SingleListingProps {
 export default function SingleListing({ car, button }: SingleListingProps) {
   const dispatch = useDispatch();
 
-  const handleViewCar = (
-    id: string,
-    e: React.MouseEvent<HTMLButtonElement>
-  ) => {
+  const handleViewCar = (id: string) => {
     dispatch(selectCar(id));
   };
 
@@ -32,6 +29,14 @@ export default function SingleListing({ car, button }: SingleListingProps) {
     dispatch(removeCar(id));
     navigate('/');
     console.log('done');
+  };
+
+  const typographySxProps = {
+    maxWidth: 241,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    mb: 1,
   };
   return (
     <div className='test'>
@@ -45,35 +50,39 @@ export default function SingleListing({ car, button }: SingleListingProps) {
             >
               {car.datePosted}
             </Typography>
-            <Typography variant='h5' component='div'>
+            <Typography variant='h5' component='div' sx={typographySxProps}>
               {car.make} {car.model}
             </Typography>
-            <Typography sx={{ mb: 1.5 }} color='text.secondary'>
+            <Typography sx={typographySxProps} color='text.secondary'>
               {car.price} USD
             </Typography>
-            <Typography variant='body2' sx={{ marginBottom: 1 }}>
+            <Typography variant='body2' sx={typographySxProps}>
               {car.mileage} miles
             </Typography>
-            <Typography variant='body2' sx={{ marginBottom: 1 }}>
+            <Typography variant='body2' sx={typographySxProps}>
               Year of production - {car.year}
             </Typography>
-            <Typography variant='body2' sx={{ marginBottom: 1 }}>
+            <Typography variant='body2' sx={typographySxProps}>
               Fuel type - {car.fuel}
             </Typography>
-            <Typography variant='body2' sx={{ marginBottom: 1 }}>
+            <Typography variant='body2' sx={typographySxProps}>
               {car.bhp} bhp.
             </Typography>
-            <Typography variant='body2' color='text.secondary'>
+            <Typography
+              variant='body2'
+              color='text.secondary'
+              sx={typographySxProps}
+            >
               {car.description}
             </Typography>
-            <Typography variant='body2' sx={{ marginTop: 1 }}>
+            <Typography variant='body2' sx={typographySxProps}>
               {car.city}, {car.country}
             </Typography>
           </CardContent>
           <CardActions>
             {button === 'view' && (
               <Link to={`/${car.id}`}>
-                <Button onClick={(e) => handleViewCar(car.id, e)} size='small'>
+                <Button onClick={(e) => handleViewCar(car.id)} size='small'>
                   Visit listing
                 </Button>
               </Link>
@@ -81,10 +90,7 @@ export default function SingleListing({ car, button }: SingleListingProps) {
             {button === 'edit & remove' && (
               <>
                 <Link to='/edit'>
-                  <Button
-                    onClick={(e) => handleViewCar(car.id, e)}
-                    size='small'
-                  >
+                  <Button onClick={() => handleViewCar(car.id)} size='small'>
                     Edit
                   </Button>
                 </Link>
