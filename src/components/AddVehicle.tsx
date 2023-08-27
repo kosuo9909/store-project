@@ -27,7 +27,6 @@ const textFields = [
 const initialFormData = Object.fromEntries(
   textFields.map(([key]) => [key, ''])
 );
-console.log(initialFormData);
 
 interface IAddVehicle {
   addOrEdit: 'add' | 'edit';
@@ -75,7 +74,6 @@ const AddVehicle: React.FC<IAddVehicle> = ({
       setError(false);
       navigate('/');
     }
-    console.log(formData);
   };
 
   const handleEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -91,12 +89,10 @@ const AddVehicle: React.FC<IAddVehicle> = ({
         navigate('/');
       }
     }
-    console.log(formData);
   };
 
   const handleClear = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
     setFormData(initialFormData);
   };
 
@@ -117,7 +113,6 @@ const AddVehicle: React.FC<IAddVehicle> = ({
         {textFields.map(([name, label]) =>
           name === 'description' ? (
             <TextField
-             
               error={formData[name as keyof ICar] === '' && error}
               helperText={
                 formData[name as keyof ICar] === '' &&
@@ -138,7 +133,6 @@ const AddVehicle: React.FC<IAddVehicle> = ({
             />
           ) : (
             <TextField
-              
               error={formData[name as keyof ICar] === '' && error}
               helperText={
                 formData[name as keyof ICar] === '' &&

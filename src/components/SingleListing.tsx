@@ -28,7 +28,6 @@ export default function SingleListing({ car, button }: SingleListingProps) {
     e.preventDefault();
     dispatch(removeCar(id));
     navigate('/');
-    console.log('done');
   };
 
   const typographySxProps = {
