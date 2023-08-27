@@ -7,6 +7,8 @@ import Stack from '@mui/material/Stack';
 import './AddVehicle.scss';
 import React, { useState } from 'react';
 import { ICar } from './interfaces/interfaces';
+import { useDispatch } from 'react-redux';
+import { addCar } from '../reducers/carsReducer';
 
 const textFields = [
   ['make', 'Make'],
@@ -21,8 +23,19 @@ const textFields = [
   ['description', 'Description'],
 ];
 
+const initialFormData = Object.fromEntries(
+  textFields.map(([key]) => [key, ''])
+);
+console.log(initialFormData);
+
 const AddVehicle = () => {
-  const [formData, setFormData] = useState<Partial<ICar>>({});
+  const dispatch = useDispatch();
+
+  const [formData, setFormData] = useState<Partial<ICar>>(initialFormData);
+
+  const [error, setError] = useState(false);
+
+  const checkEmpty = (item: any) => item === '';
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -30,12 +43,19 @@ const AddVehicle = () => {
       ...formData,
       [name]: value,
     });
-    console.log(formData);
   };
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setFormData({});
+    if (Object.values(formData).some(checkEmpty)) {
+      setError(true);
+      console.log(error);
+    } else {
+      dispatch(addCar(formData as ICar));
+      setFormData({});
+      setError(false);
+    }
+    console.log(formData);
   };
 
   return (
@@ -55,6 +75,12 @@ const AddVehicle = () => {
         {textFields.map(([name, label]) =>
           name === 'description' ? (
             <TextField
+              error={formData[name as keyof ICar] === '' && error}
+              helperText={
+                formData[name as keyof ICar] === '' &&
+                error &&
+                'This field is required.'
+              }
               key={name}
               id={name}
               name={name}
@@ -69,6 +95,12 @@ const AddVehicle = () => {
             />
           ) : (
             <TextField
+              error={formData[name as keyof ICar] === '' && error}
+              helperText={
+                formData[name as keyof ICar] === '' &&
+                error &&
+                'This field is required.'
+              }
               key={name}
               id={name}
               name={name}

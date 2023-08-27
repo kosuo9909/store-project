@@ -12,3 +12,10 @@ export interface ICar {
   price: number;
   description: string;
 }
+
+export interface RootState {
+  cars: {
+    value: ICar[];
+    selectedCar?: ICar;
+  };
+}

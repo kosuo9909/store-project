@@ -1,31 +1,32 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
+import { RootState } from './interfaces/interfaces';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
+import './CarDetail.scss';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { ICar } from './interfaces/interfaces';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { selectCar } from '../reducers/carsReducer';
+import { removeCar } from '../reducers/carsReducer';
 import React from 'react';
 
-interface SingleListingProps {
-  storage: ICar[];
-}
-
-export default function SingleListing({ storage }: SingleListingProps) {
+const CarDetail = () => {
+  const car = useSelector((state: RootState) => state.cars.selectedCar);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleViewCar = (
-    id: string,
-    e: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    dispatch(selectCar(id));
+  const handleRemove = (id: string, e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    dispatch(removeCar(id));
+    navigate('/shop');
+    console.log('done');
   };
+
   return (
-    <div className='test'>
-      {storage.map((car) => (
+    <div className='div-wrapper'>
+      {car && (
         <Box sx={{ minWidth: 275, maxWidth: 350 }} key={car.id}>
           <Card variant='outlined'>
             <CardContent sx={{ minHeight: 200 }}>
@@ -54,14 +55,16 @@ export default function SingleListing({ storage }: SingleListingProps) {
             </CardContent>
             <CardActions>
               <Link to={`/${car.id}`}>
-                <Button onClick={(e) => handleViewCar(car.id, e)} size='small'>
-                  Visit listing
+                <Button onClick={(e) => handleRemove(car.id, e)} size='small'>
+                  Remove listing
                 </Button>
               </Link>
             </CardActions>
           </Card>
         </Box>
-      ))}
+      )}
     </div>
   );
-}
+};
+
+export default CarDetail;
