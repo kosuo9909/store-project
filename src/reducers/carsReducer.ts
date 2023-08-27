@@ -7,6 +7,11 @@ interface CarState {
   selectedCar?: ICar;
 }
 
+interface EditCarPayload {
+  id: string;
+  updatedCar: Partial<ICar>;
+}
+
 const initialState: CarState = {
   value: [],
   selectedCar: undefined,
@@ -39,7 +44,14 @@ export const carSlice = createSlice({
     selectCar: (state, action: PayloadAction<string>) => {
       state.selectedCar = state.value.find((car) => car.id === action.payload);
     },
-    editCar: (state, action) => {},
+    editCar: (state, action: PayloadAction<EditCarPayload>) => {
+      const { id, updatedCar } = action.payload;
+      const carIndex = state.value.findIndex((item) => item.id === id);
+
+      if (carIndex !== -1) {
+        state.value[carIndex] = { ...state.value[carIndex], ...updatedCar };
+      }
+    },
   },
 });
 

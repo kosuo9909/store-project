@@ -5,10 +5,11 @@ import SendIcon from '@mui/icons-material/Send';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import './AddVehicle.scss';
-import React, { useState } from 'react';
-import { ICar } from './interfaces/interfaces';
-import { useDispatch } from 'react-redux';
-import { addCar } from '../reducers/carsReducer';
+import React, { useEffect, useState } from 'react';
+import { ICar, RootState } from './interfaces/interfaces';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCar, editCar } from '../reducers/carsReducer';
+import { useNavigate } from 'react-router';
 
 const textFields = [
   ['make', 'Make'],
@@ -28,12 +29,30 @@ const initialFormData = Object.fromEntries(
 );
 console.log(initialFormData);
 
-const AddVehicle = () => {
+interface IAddVehicle {
+  addOrEdit: 'add' | 'edit';
+  car?: Partial<ICar>;
+}
+
+const AddVehicle: React.FC<IAddVehicle> = ({
+  addOrEdit = 'add',
+}: IAddVehicle) => {
   const dispatch = useDispatch();
+
+  const car = useSelector((state: RootState) => state.cars.selectedCar);
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState<Partial<ICar>>(initialFormData);
 
   const [error, setError] = useState(false);
+
+  useEffect(() => {
+    setFormData(initialFormData);
+    if (addOrEdit === 'edit' && car) {
+      setFormData(car);
+    }
+  }, [car, addOrEdit]);
 
   const checkEmpty = (item: any) => item === '';
 
@@ -49,18 +68,38 @@ const AddVehicle = () => {
     e.preventDefault();
     if (Object.values(formData).some(checkEmpty)) {
       setError(true);
-      console.log(error);
     } else {
       dispatch(addCar(formData as ICar));
       setFormData({});
       setError(false);
+      navigate('/');
     }
     console.log(formData);
   };
 
+  const handleEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (Object.values(formData).some(checkEmpty)) {
+      setError(true);
+    } else {
+      if (car) {
+        dispatch(editCar({ id: car.id, updatedCar: formData }));
+        setFormData({});
+        setError(false);
+        navigate('/');
+      }
+    }
+    console.log(formData);
+  };
+
+  const handleClear = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setFormData(initialFormData);
+  };
+
   return (
     <main>
-      <h2>Add a vehicle</h2>
+      {addOrEdit === 'add' ? <h2>Add a vehicle</h2> : <h2>Edit vehicle</h2>}
       <Box
         component='form'
         noValidate
@@ -115,18 +154,42 @@ const AddVehicle = () => {
           )
         )}
       </Box>
-      <Stack direction='row' spacing={2}>
-        <Button variant='outlined' startIcon={<DeleteIcon />}>
-          Clear
-        </Button>
-        <Button
-          variant='contained'
-          onClick={handleSubmit}
-          endIcon={<SendIcon />}
-        >
-          Submit
-        </Button>
-      </Stack>
+      {addOrEdit === 'add' && (
+        <Stack direction='row' spacing={2}>
+          <Button
+            onClick={handleClear}
+            variant='outlined'
+            startIcon={<DeleteIcon />}
+          >
+            Clear
+          </Button>
+          <Button
+            variant='contained'
+            onClick={handleSubmit}
+            endIcon={<SendIcon />}
+          >
+            Submit
+          </Button>
+        </Stack>
+      )}
+      {addOrEdit === 'edit' && (
+        <Stack direction='row' spacing={2}>
+          <Button
+            onClick={handleClear}
+            variant='outlined'
+            startIcon={<DeleteIcon />}
+          >
+            Clear
+          </Button>
+          <Button
+            variant='contained'
+            onClick={handleEdit}
+            endIcon={<SendIcon />}
+          >
+            Submit edit
+          </Button>
+        </Stack>
+      )}
     </main>
   );
 };

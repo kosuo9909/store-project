@@ -15,8 +15,6 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 
-const pages = ['Shop', 'Add vehicle', 'About'];
-
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -34,10 +32,6 @@ function Navbar() {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
   };
 
   return (
@@ -61,7 +55,7 @@ function Navbar() {
                 textDecoration: 'none',
               }}
             >
-              LOGO
+              HOME
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -75,30 +69,6 @@ function Navbar() {
               >
                 <MenuIcon />
               </IconButton>
-              <Menu
-                id='menu-appbar'
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
-                sx={{
-                  display: { xs: 'block', md: 'none' },
-                }}
-              >
-                {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign='center'>{page}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
             </Box>
             <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
             <Typography
@@ -117,17 +87,9 @@ function Navbar() {
                 textDecoration: 'none',
               }}
             >
-              LOGO
+              HOME
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              <Link to='shop'>
-                <Button
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
-                >
-                  Shop
-                </Button>
-              </Link>
               <Link to='add'>
                 <Button
                   onClick={handleCloseNavMenu}
@@ -136,46 +98,6 @@ function Navbar() {
                   Add Vehicle
                 </Button>
               </Link>
-              <Link to='cart'>
-                <Button
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
-                >
-                  Cart
-                </Button>
-              </Link>
-            </Box>
-
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title='View Cart'>
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <ShoppingCartIcon sx={{ color: 'white' }}>
-                    Cart
-                  </ShoppingCartIcon>
-                </IconButton>
-              </Tooltip>
-              {/* <Menu
-              sx={{ mt: '45px' }}
-              id='menu-appbar'
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-              >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                <Typography textAlign='center'>{setting}</Typography>
-                </MenuItem>
-                ))}
-              </Menu> */}
             </Box>
           </Toolbar>
         </Container>

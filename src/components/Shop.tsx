@@ -1,8 +1,6 @@
-import * as React from 'react';
-import SingleListing from './SingleListing';
+import Listing from './Listing';
 import { useSelector } from 'react-redux';
 import { RootState } from './interfaces/interfaces';
-import { Outlet } from 'react-router';
 
 export default function Shop() {
   const storage = useSelector((state: RootState) => state.cars.value);
@@ -10,7 +8,7 @@ export default function Shop() {
 
   return (
     <div className='test'>
-      <SingleListing storage={storage} />
+      <Listing storage={storage} />
     </div>
   );
 }

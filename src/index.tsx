@@ -5,7 +5,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Shop from './components/Shop';
 import AddVehicle from './components/AddVehicle';
-import Add from './components/Add';
 import { store } from './store/store';
 import { Provider } from 'react-redux';
 import CarDetail from './components/CarDetail';
@@ -16,11 +15,11 @@ const router = createBrowserRouter([
     element: <Navbar />,
     children: [
       {
-        path: 'shop',
+        path: '/',
         element: <Shop />,
       },
-      { path: 'add', element: <AddVehicle /> },
-      { path: 'cart', element: <Add /> },
+      { path: 'add', element: <AddVehicle addOrEdit='add' /> },
+      { path: 'edit', element: <AddVehicle addOrEdit='edit' /> },
       { path: ':carID', element: <CarDetail /> },
     ],
   },
