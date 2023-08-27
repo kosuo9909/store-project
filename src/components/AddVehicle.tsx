@@ -97,7 +97,7 @@ const AddVehicle: React.FC<IAddVehicle> = ({
   };
 
   return (
-    <main>
+    <div>
       {addOrEdit === 'add' ? <h2>Add a vehicle</h2> : <h2>Edit vehicle</h2>}
       <Box
         component='form'
@@ -168,7 +168,7 @@ const AddVehicle: React.FC<IAddVehicle> = ({
           </Button>
         </Stack>
       )}
-    </main>
+    </div>
   );
 };
 
