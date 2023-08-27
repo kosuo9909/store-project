@@ -38,7 +38,7 @@ export default function SingleListing({ car, button }: SingleListingProps) {
     mb: 1,
   };
   return (
-    <div className='test'>
+    <div className='div-wrap'>
       <Box sx={{ width: 330 }} key={car.id}>
         <Card variant='outlined'>
           <CardContent sx={{ minHeight: 200 }}>

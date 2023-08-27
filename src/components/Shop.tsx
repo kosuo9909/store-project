@@ -6,7 +6,7 @@ export default function Shop() {
   const storage = useSelector((state: RootState) => state.cars.value);
 
   return (
-    <div className='test'>
+    <div className='div-wrap'>
       <Listing storage={storage} />
     </div>
   );

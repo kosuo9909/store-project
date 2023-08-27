@@ -7,7 +7,7 @@ interface SingleListingProps {
 
 export default function Listing({ storage }: SingleListingProps) {
   return (
-    <div className='test'>
+    <div className='div-wrap'>
       {storage.map((car) => (
         <SingleListing car={car} button='view' key={car.id} />
       ))}
