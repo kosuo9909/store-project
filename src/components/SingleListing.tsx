@@ -31,7 +31,7 @@ export default function SingleListing({ car, button }: SingleListingProps) {
   };
 
   const typographySxProps = {
-    maxWidth: 241,
+    maxWidth: 300,
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
@@ -39,7 +39,7 @@ export default function SingleListing({ car, button }: SingleListingProps) {
   };
   return (
     <div className='test'>
-      <Box sx={{ minWidth: 275, maxWidth: 350 }} key={car.id}>
+      <Box sx={{ width: 330 }} key={car.id}>
         <Card variant='outlined'>
           <CardContent sx={{ minHeight: 200 }}>
             <Typography
@@ -67,11 +67,7 @@ export default function SingleListing({ car, button }: SingleListingProps) {
             <Typography variant='body2' sx={typographySxProps}>
               {car.bhp} bhp.
             </Typography>
-            <Typography
-              variant='body2'
-              color='text.secondary'
-              sx={typographySxProps}
-            >
+            <Typography variant='body2' color='text.secondary' sx={{ mb: 1 }}>
               {car.description}
             </Typography>
             <Typography variant='body2' sx={typographySxProps}>

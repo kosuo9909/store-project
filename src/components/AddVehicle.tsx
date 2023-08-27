@@ -110,48 +110,27 @@ const AddVehicle: React.FC<IAddVehicle> = ({
           gap: 3,
         }}
       >
-        {textFields.map(([name, label]) =>
-          name === 'description' ? (
-            <TextField
-              error={formData[name as keyof ICar] === '' && error}
-              helperText={
-                formData[name as keyof ICar] === '' &&
-                error &&
-                'This field is required.'
-              }
-              key={name}
-              id={name}
-              name={name}
-              type='input'
-              label={label}
-              value={
-                formData[name as keyof ICar] ? formData[name as keyof ICar] : ''
-              }
-              placeholder={label}
-              onChange={handleChange}
-              multiline
-            />
-          ) : (
-            <TextField
-              error={formData[name as keyof ICar] === '' && error}
-              helperText={
-                formData[name as keyof ICar] === '' &&
-                error &&
-                'This field is required.'
-              }
-              key={name}
-              id={name}
-              name={name}
-              type='input'
-              label={label}
-              value={
-                formData[name as keyof ICar] ? formData[name as keyof ICar] : ''
-              }
-              placeholder={label}
-              onChange={handleChange}
-            />
-          )
-        )}
+        {textFields.map(([name, label]) => (
+          <TextField
+            error={formData[name as keyof ICar] === '' && error}
+            helperText={
+              formData[name as keyof ICar] === '' &&
+              error &&
+              'This field is required.'
+            }
+            key={name}
+            id={name}
+            name={name}
+            type='input'
+            label={label}
+            value={
+              formData[name as keyof ICar] ? formData[name as keyof ICar] : ''
+            }
+            placeholder={label}
+            onChange={handleChange}
+            multiline={formData[name as keyof ICar] === 'description'}
+          />
+        ))}
       </Box>
       {addOrEdit === 'add' && (
         <Stack direction='row' spacing={2}>
