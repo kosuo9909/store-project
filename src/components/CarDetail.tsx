@@ -6,11 +6,7 @@ import { useSelector } from 'react-redux';
 const CarDetail = () => {
   const car = useSelector((state: RootState) => state.cars.selectedCar);
 
-  return (
-    <div className='div-wrapper'>
-      {car && <SingleListing car={car} button='edit & remove' />}
-    </div>
-  );
+  return <div>{car && <SingleListing car={car} button='edit & remove' />}</div>;
 };
 
 export default CarDetail;
