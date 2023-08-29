@@ -18,20 +18,20 @@ const router = createBrowserRouter([
         path: '/',
         element: <Shop />,
       },
-      { path: 'add', element: <AddVehicle addOrEdit='add' /> },
-      { path: 'edit', element: <AddVehicle addOrEdit='edit' /> },
+      { path: 'add', element: <AddVehicle addOrEdit="add" /> },
+      { path: 'edit', element: <AddVehicle addOrEdit="edit" /> },
       { path: ':carID', element: <CarDetail /> },
     ],
   },
 ]);
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById('root') as HTMLElement,
 );
 root.render(
   <React.StrictMode>
     <Provider store={store}>
       <RouterProvider router={router}></RouterProvider>
     </Provider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

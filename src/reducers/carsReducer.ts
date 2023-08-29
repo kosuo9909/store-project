@@ -30,7 +30,7 @@ export const carSlice = createSlice({
   initialState,
   reducers: {
     addCar: (state, action: PayloadAction<ICar>) => {
-      let myID = uuidv4();
+      const myID = uuidv4();
       const carWithDateAndID = {
         ...action.payload,
         datePosted: formatDate(new Date()),

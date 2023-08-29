@@ -40,56 +40,56 @@ export default function SingleListing({ car, button }: SingleListingProps) {
   return (
     <div>
       <Box sx={{ width: 330 }} key={car.id}>
-        <Card variant='outlined'>
+        <Card variant="outlined">
           <CardContent sx={{ height: 320 }}>
             <Typography
               sx={{ fontSize: 14 }}
-              color='text.secondary'
+              color="text.secondary"
               gutterBottom
             >
               {car.datePosted}
             </Typography>
-            <Typography variant='h5' component='div' sx={typographySxProps}>
+            <Typography variant="h5" component="div" sx={typographySxProps}>
               {car.make} {car.model}
             </Typography>
-            <Typography sx={typographySxProps} color='text.secondary'>
+            <Typography sx={typographySxProps} color="text.secondary">
               {car.price} USD
             </Typography>
-            <Typography variant='body2' sx={typographySxProps}>
+            <Typography variant="body2" sx={typographySxProps}>
               {car.mileage} miles
             </Typography>
-            <Typography variant='body2' sx={typographySxProps}>
+            <Typography variant="body2" sx={typographySxProps}>
               Year of production - {car.year}
             </Typography>
-            <Typography variant='body2' sx={typographySxProps}>
+            <Typography variant="body2" sx={typographySxProps}>
               Fuel type - {car.fuel}
             </Typography>
-            <Typography variant='body2' sx={typographySxProps}>
+            <Typography variant="body2" sx={typographySxProps}>
               {car.bhp} bhp.
             </Typography>
-            <Typography variant='body2' color='text.secondary' sx={{ mb: 1 }}>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
               {car.description}
             </Typography>
-            <Typography variant='body2' sx={typographySxProps}>
+            <Typography variant="body2" sx={typographySxProps}>
               {car.city}, {car.country}
             </Typography>
           </CardContent>
           <CardActions>
             {button === 'view' && (
               <Link to={`/${car.id}`}>
-                <Button onClick={(e) => handleViewCar(car.id)} size='small'>
+                <Button onClick={(e) => handleViewCar(car.id)} size="small">
                   Visit listing
                 </Button>
               </Link>
             )}
             {button === 'edit & remove' && (
               <>
-                <Link to='/edit'>
-                  <Button onClick={() => handleViewCar(car.id)} size='small'>
+                <Link to="/edit">
+                  <Button onClick={() => handleViewCar(car.id)} size="small">
                     Edit
                   </Button>
                 </Link>
-                <Button onClick={(e) => handleRemove(car.id, e)} size='small'>
+                <Button onClick={(e) => handleRemove(car.id, e)} size="small">
                   Remove
                 </Button>
               </>

@@ -6,10 +6,11 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import './AddVehicle.scss';
 import React, { useEffect, useState } from 'react';
-import { ICar, RootState } from './interfaces/interfaces';
+import { RootState } from '../store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCar, editCar } from '../reducers/carsReducer';
 import { useNavigate } from 'react-router';
+import { ICar } from './interfaces/interfaces';
 
 const textFields = [
   ['make', 'Make'],
@@ -25,7 +26,7 @@ const textFields = [
 ];
 
 const initialFormData = Object.fromEntries(
-  textFields.map(([key]) => [key, ''])
+  textFields.map(([key]) => [key, '']),
 );
 
 interface IAddVehicle {
@@ -53,7 +54,7 @@ const AddVehicle: React.FC<IAddVehicle> = ({
     }
   }, [car, addOrEdit]);
 
-  const checkEmpty = (item: any) => item === '';
+  const checkEmpty = (item: string | number) => item === '';
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -100,7 +101,7 @@ const AddVehicle: React.FC<IAddVehicle> = ({
     <main>
       {addOrEdit === 'add' ? <h2>Add a vehicle</h2> : <h2>Edit vehicle</h2>}
       <Box
-        component='form'
+        component="form"
         noValidate
         sx={{
           display: 'grid',
@@ -121,7 +122,7 @@ const AddVehicle: React.FC<IAddVehicle> = ({
             key={name}
             id={name}
             name={name}
-            type='input'
+            type="input"
             label={label}
             value={
               formData[name as keyof ICar] ? formData[name as keyof ICar] : ''
@@ -133,16 +134,16 @@ const AddVehicle: React.FC<IAddVehicle> = ({
         ))}
       </Box>
       {addOrEdit === 'add' && (
-        <Stack direction='row' spacing={2}>
+        <Stack direction="row" spacing={2}>
           <Button
             onClick={handleClear}
-            variant='outlined'
+            variant="outlined"
             startIcon={<DeleteIcon />}
           >
             Clear
           </Button>
           <Button
-            variant='contained'
+            variant="contained"
             onClick={handleSubmit}
             endIcon={<SendIcon />}
           >
@@ -151,16 +152,16 @@ const AddVehicle: React.FC<IAddVehicle> = ({
         </Stack>
       )}
       {addOrEdit === 'edit' && (
-        <Stack direction='row' spacing={2}>
+        <Stack direction="row" spacing={2}>
           <Button
             onClick={handleClear}
-            variant='outlined'
+            variant="outlined"
             startIcon={<DeleteIcon />}
           >
             Clear
           </Button>
           <Button
-            variant='contained'
+            variant="contained"
             onClick={handleEdit}
             endIcon={<SendIcon />}
           >
