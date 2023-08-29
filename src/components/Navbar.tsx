@@ -8,9 +8,28 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import { useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store/store';
+import { LOCALES } from '../i18n/locale';
+import { changeLocale } from '../reducers/localeReducer';
 
 function Navbar() {
   const intl = useIntl();
+  const dispatch = useDispatch();
+  const reduxLocale = useSelector((state: RootState) => state.locale.locale);
+  const locale = LOCALES[reduxLocale as keyof typeof LOCALES];
+
+  const handleLocale = () => {
+    if (reduxLocale === 'en-US') {
+      dispatch(changeLocale('bg-BG'));
+      window.location.reload();
+    } else {
+      dispatch(changeLocale('en-US'));
+      window.location.reload();
+    }
+    console.log('working, locale is' + reduxLocale);
+  };
+
   return (
     <>
       <AppBar position="static">
@@ -41,6 +60,20 @@ function Navbar() {
                   {intl.formatMessage({ id: 'addNavButton' })}
                 </Button>
               </Link>
+            </Box>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: 'none', md: 'flex' },
+                justifyContent: 'flex-end',
+              }}
+            >
+              <Button
+                onClick={handleLocale}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                {locale === 'bg-BG' ? 'Switch to English' : 'Промени език'}
+              </Button>
             </Box>
           </Toolbar>
         </Container>

@@ -1,7 +1,10 @@
 import { LOCALES } from './locale';
 
 export const messages = {
-  [LOCALES.ENGLISH]: {
+  [LOCALES['en-US']]: {
+    // Locale
+    'en-US': 'English',
+    'bg-BG': 'Bulgarian',
     // Date
     today: 'Today',
 
@@ -30,7 +33,10 @@ export const messages = {
     viewlisting: 'View listing',
     dateposted: 'Date posted',
   },
-  [LOCALES.BULGARIAN]: {
+  [LOCALES['bg-BG']]: {
+    // Locale
+    'en-US': 'Английски',
+    'bg-BG': 'Български',
     // Date
     today: 'Днес',
 

@@ -11,16 +11,12 @@ import Shop from './components/Shop';
 import { createTheme } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
 import { IntlProvider } from 'react-intl';
-import { LOCALES } from './i18n/locale';
 import { messages } from './i18n/messages';
 
 const theme = createTheme({
   palette: {
     primary: {
       main: '#9775fa',
-      // light: will be calculated from palette.primary.main,
-      // dark: will be calculated from palette.primary.main,
-      // contrastText: will be calculated to contrast with palette.primary.main
     },
     secondary: {
       main: '#E0C2FF',
@@ -44,7 +40,8 @@ const router = createBrowserRouter([
   },
 ]);
 
-const locale = LOCALES.BULGARIAN;
+const locale = JSON.parse(localStorage.getItem('reduxState') || '').locale
+  .locale;
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,

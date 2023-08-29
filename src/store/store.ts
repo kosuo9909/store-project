@@ -1,12 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import carReducer from '../reducers/carsReducer';
+import localeSlice from '../reducers/localeReducer';
 
 const storedState = localStorage.getItem('reduxState');
 
 const preloadedState = storedState ? JSON.parse(storedState) : {};
 
 export const store = configureStore({
-  reducer: { cars: carReducer },
+  reducer: { cars: carReducer, locale: localeSlice },
   preloadedState: preloadedState,
 });
 
