@@ -10,8 +10,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addCar, editCar } from '../reducers/carsReducer';
 import { useNavigate } from 'react-router';
 import { ICar } from './interfaces/interfaces';
-import './AddVehicle.scss';
 import { useIntl } from 'react-intl';
+import './AddVehicle.scss';
 
 const textFields = [
   ['make', 'Make'],

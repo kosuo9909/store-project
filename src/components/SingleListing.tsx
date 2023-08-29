@@ -9,7 +9,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { removeCar, selectCar } from '../reducers/carsReducer';
 import React from 'react';
-import { useIntl } from 'react-intl';
+import { FormattedDate, useIntl } from 'react-intl';
 
 interface SingleListingProps {
   car: ICar;
@@ -49,7 +49,7 @@ export default function SingleListing({ car, button }: SingleListingProps) {
               color="text.secondary"
               gutterBottom
             >
-              {car.datePosted}
+              <FormattedDate value={car.datePosted} />
             </Typography>
             <Typography variant="h5" component="div" sx={typographySxProps}>
               {car.make} {car.model}

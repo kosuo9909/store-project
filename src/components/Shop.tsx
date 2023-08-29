@@ -68,7 +68,10 @@ const Shop = () => {
     },
     {
       field: 'actions',
-      headerName: intl.formatMessage({ id: 'viewlisting' }),
+      // headerName: intl.formatMessage({ id: 'viewlisting' }),
+      headerName: '',
+      sortable: false,
+      disableColumnMenu: true,
       width: 150,
       renderCell: (params: GridCellParams) => {
         const dispatch = useDispatch();
