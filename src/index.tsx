@@ -8,6 +8,22 @@ import { store } from './store/store';
 import { Provider } from 'react-redux';
 import CarDetail from './components/CarDetail';
 import Shop from './components/Shop';
+import { createTheme } from '@mui/material';
+import { ThemeProvider } from '@emotion/react';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#9775fa',
+      // light: will be calculated from palette.primary.main,
+      // dark: will be calculated from palette.primary.main,
+      // contrastText: will be calculated to contrast with palette.primary.main
+    },
+    secondary: {
+      main: '#E0C2FF',
+    },
+  },
+});
 
 const router = createBrowserRouter([
   {
@@ -30,8 +46,10 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={router}></RouterProvider>
-    </Provider>
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <RouterProvider router={router}></RouterProvider>
+      </Provider>
+    </ThemeProvider>
   </React.StrictMode>,
 );
