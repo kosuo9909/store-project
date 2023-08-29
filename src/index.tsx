@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Navbar from './components/Navbar';
 import AddVehicle from './components/AddVehicle';
 import { store } from './store/store';
 import { Provider } from 'react-redux';
@@ -10,8 +9,7 @@ import CarDetail from './components/CarDetail';
 import Shop from './components/Shop';
 import { createTheme } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
-import { IntlProvider } from 'react-intl';
-import { messages } from './i18n/messages';
+import NavbarWrapper from './components/NavbarWrapper';
 
 const theme = createTheme({
   palette: {
@@ -27,7 +25,7 @@ const theme = createTheme({
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Navbar />,
+    element: <NavbarWrapper />,
     children: [
       {
         path: '/',
@@ -40,8 +38,8 @@ const router = createBrowserRouter([
   },
 ]);
 
-const locale = JSON.parse(localStorage.getItem('reduxState') || '').locale
-  .locale;
+// const locale = JSON.parse(localStorage.getItem('reduxState') || '').locale
+//   .locale;
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -49,15 +47,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <IntlProvider
-        messages={messages[locale]}
-        locale={locale}
-        defaultLocale="bg-BG"
-      >
-        <Provider store={store}>
-          <RouterProvider router={router}></RouterProvider>
-        </Provider>
-      </IntlProvider>
+      <Provider store={store}>
+        <RouterProvider router={router}></RouterProvider>
+      </Provider>
     </ThemeProvider>
   </React.StrictMode>,
 );

@@ -31,6 +31,7 @@ module.exports = {
     // 'linebreak-style': ['error', 'windows'],
     'react/react-in-jsx-scope': 'off',
     quotes: ['error', 'single'],
+    'react/prop-types': 'off',
     semi: ['error', 'always'],
     eqeqeq: 'error', // enforce the use of === and !==
     'no-var': 'error', // disallow the use of var

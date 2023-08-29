@@ -8,27 +8,14 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import { useIntl } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store/store';
-import { LOCALES } from '../i18n/locale';
-import { changeLocale } from '../reducers/localeReducer';
 
-function Navbar() {
+interface INavbar {
+  handleLocale: () => void;
+  locale: string;
+}
+
+const Navbar = ({ handleLocale, locale }: INavbar) => {
   const intl = useIntl();
-  const dispatch = useDispatch();
-  const reduxLocale = useSelector((state: RootState) => state.locale.locale);
-  const locale = LOCALES[reduxLocale as keyof typeof LOCALES];
-
-  const handleLocale = () => {
-    if (reduxLocale === 'en-US') {
-      dispatch(changeLocale('bg-BG'));
-      window.location.reload();
-    } else {
-      dispatch(changeLocale('en-US'));
-      window.location.reload();
-    }
-    console.log('working, locale is' + reduxLocale);
-  };
 
   return (
     <>
@@ -81,5 +68,5 @@ function Navbar() {
       <Outlet />
     </>
   );
-}
+};
 export default Navbar;
