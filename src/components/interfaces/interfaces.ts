@@ -1,4 +1,5 @@
 export interface ICar {
+  today?: string;
   id: string;
   datePosted: string;
   make: string;

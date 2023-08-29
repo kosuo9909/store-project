@@ -17,23 +17,18 @@ const initialState: CarState = {
   selectedCar: undefined,
 };
 
-const formatDate = (date: Date) => {
-  if (isToday(date)) {
-    return `Today, ${format(date, 'HH:mm a')}`;
-  } else {
-    return format(date, 'HH:mm a');
-  }
-};
-
 export const carSlice = createSlice({
   name: 'cars',
   initialState,
   reducers: {
     addCar: (state, action: PayloadAction<ICar>) => {
       const myID = uuidv4();
+      const todayString = action.payload.today;
       const carWithDateAndID = {
         ...action.payload,
-        datePosted: formatDate(new Date()),
+        datePosted: isToday(new Date())
+          ? `${todayString}, ${format(new Date(), 'HH:mm a')}`
+          : format(new Date(), 'HH:mm a'),
         id: myID,
       };
       state.value.push(carWithDateAndID);

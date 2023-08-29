@@ -10,6 +10,9 @@ import CarDetail from './components/CarDetail';
 import Shop from './components/Shop';
 import { createTheme } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
+import { IntlProvider } from 'react-intl';
+import { LOCALES } from './i18n/locale';
+import { messages } from './i18n/messages';
 
 const theme = createTheme({
   palette: {
@@ -41,15 +44,23 @@ const router = createBrowserRouter([
   },
 ]);
 
+const locale = LOCALES.BULGARIAN;
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <Provider store={store}>
-        <RouterProvider router={router}></RouterProvider>
-      </Provider>
+      <IntlProvider
+        messages={messages[locale]}
+        locale={locale}
+        defaultLocale="bg-BG"
+      >
+        <Provider store={store}>
+          <RouterProvider router={router}></RouterProvider>
+        </Provider>
+      </IntlProvider>
     </ThemeProvider>
   </React.StrictMode>,
 );

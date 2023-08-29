@@ -9,6 +9,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { removeCar, selectCar } from '../reducers/carsReducer';
 import React from 'react';
+import { useIntl } from 'react-intl';
 
 interface SingleListingProps {
   car: ICar;
@@ -16,6 +17,7 @@ interface SingleListingProps {
 }
 
 export default function SingleListing({ car, button }: SingleListingProps) {
+  const intl = useIntl();
   const dispatch = useDispatch();
 
   const handleViewCar = (id: string) => {
@@ -56,18 +58,19 @@ export default function SingleListing({ car, button }: SingleListingProps) {
               {car.price} USD
             </Typography>
             <Typography variant="body2" sx={typographySxProps}>
-              {car.mileage} miles
+              {intl.formatMessage({ id: 'mileage' })} - {car.mileage}
             </Typography>
             <Typography variant="body2" sx={typographySxProps}>
-              Year of production - {car.year}
+              {intl.formatMessage({ id: 'yearOfProduction' })} - {car.year}
             </Typography>
             <Typography variant="body2" sx={typographySxProps}>
-              Fuel type - {car.fuel}
+              {intl.formatMessage({ id: 'fuel' })} - {car.fuel}
             </Typography>
             <Typography variant="body2" sx={typographySxProps}>
-              {car.bhp} bhp.
+              {intl.formatMessage({ id: 'bhp' })} - {car.bhp}
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+              {intl.formatMessage({ id: 'description' })} <br></br>
               {car.description}
             </Typography>
             <Typography variant="body2" sx={typographySxProps}>
@@ -78,7 +81,7 @@ export default function SingleListing({ car, button }: SingleListingProps) {
             {button === 'view' && (
               <Link to={`/${car.id}`}>
                 <Button onClick={() => handleViewCar(car.id)} size="small">
-                  Visit listing
+                  {intl.formatMessage({ id: 'viewlisting' })}
                 </Button>
               </Link>
             )}
@@ -86,11 +89,11 @@ export default function SingleListing({ car, button }: SingleListingProps) {
               <>
                 <Link to="/edit">
                   <Button onClick={() => handleViewCar(car.id)} size="small">
-                    Edit
+                    {intl.formatMessage({ id: 'edit' })}
                   </Button>
                 </Link>
                 <Button onClick={(e) => handleRemove(car.id, e)} size="small">
-                  Remove
+                  {intl.formatMessage({ id: 'remove' })}
                 </Button>
               </>
             )}

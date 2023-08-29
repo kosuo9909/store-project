@@ -11,6 +11,7 @@ import { addCar, editCar } from '../reducers/carsReducer';
 import { useNavigate } from 'react-router';
 import { ICar } from './interfaces/interfaces';
 import './AddVehicle.scss';
+import { useIntl } from 'react-intl';
 
 const textFields = [
   ['make', 'Make'],
@@ -38,6 +39,10 @@ const AddVehicle: React.FC<IAddVehicle> = ({
   addOrEdit = 'add',
 }: IAddVehicle) => {
   const dispatch = useDispatch();
+
+  const intl = useIntl();
+
+  const today = intl.formatMessage({ id: 'today' });
 
   const car = useSelector((state: RootState) => state.cars.selectedCar);
 
@@ -70,7 +75,7 @@ const AddVehicle: React.FC<IAddVehicle> = ({
     if (Object.values(formData).some(checkEmpty)) {
       setError(true);
     } else {
-      dispatch(addCar(formData as ICar));
+      dispatch(addCar({ ...(formData as ICar), today }));
       setFormData({});
       setError(false);
       navigate('/');
@@ -99,7 +104,11 @@ const AddVehicle: React.FC<IAddVehicle> = ({
 
   return (
     <main>
-      {addOrEdit === 'add' ? <h2>Add a vehicle</h2> : <h2>Edit vehicle</h2>}
+      {addOrEdit === 'add' ? (
+        <h2>{intl.formatMessage({ id: 'add' })}</h2>
+      ) : (
+        <h2>{intl.formatMessage({ id: 'edit' })}</h2>
+      )}
       <Box
         component="form"
         noValidate
@@ -123,7 +132,7 @@ const AddVehicle: React.FC<IAddVehicle> = ({
             id={name}
             name={name}
             type="input"
-            label={label}
+            label={intl.formatMessage({ id: name })}
             value={
               formData[name as keyof ICar] ? formData[name as keyof ICar] : ''
             }
@@ -140,14 +149,14 @@ const AddVehicle: React.FC<IAddVehicle> = ({
             variant="outlined"
             startIcon={<DeleteIcon />}
           >
-            Clear
+            {intl.formatMessage({ id: 'clear' })}
           </Button>
           <Button
             variant="contained"
             onClick={handleSubmit}
             endIcon={<SendIcon />}
           >
-            Submit
+            {intl.formatMessage({ id: 'submit' })}
           </Button>
         </Stack>
       )}
@@ -158,14 +167,14 @@ const AddVehicle: React.FC<IAddVehicle> = ({
             variant="outlined"
             startIcon={<DeleteIcon />}
           >
-            Clear
+            {intl.formatMessage({ id: 'clear' })}
           </Button>
           <Button
             variant="contained"
             onClick={handleEdit}
             endIcon={<SendIcon />}
           >
-            Submit edit
+            {intl.formatMessage({ id: 'submit' })}
           </Button>
         </Stack>
       )}
