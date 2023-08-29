@@ -4,13 +4,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
-import './AddVehicle.scss';
 import React, { useEffect, useState } from 'react';
 import { RootState } from '../store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCar, editCar } from '../reducers/carsReducer';
 import { useNavigate } from 'react-router';
 import { ICar } from './interfaces/interfaces';
+import './AddVehicle.scss';
 
 const textFields = [
   ['make', 'Make'],

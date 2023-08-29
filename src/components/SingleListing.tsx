@@ -77,7 +77,7 @@ export default function SingleListing({ car, button }: SingleListingProps) {
           <CardActions>
             {button === 'view' && (
               <Link to={`/${car.id}`}>
-                <Button onClick={(e) => handleViewCar(car.id)} size="small">
+                <Button onClick={() => handleViewCar(car.id)} size="small">
                   Visit listing
                 </Button>
               </Link>
