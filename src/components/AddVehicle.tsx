@@ -4,7 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { RootState } from '../store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCar, editCar } from '../reducers/carsReducer';
@@ -35,6 +35,37 @@ interface IAddVehicle {
   car?: Partial<ICar>;
 }
 
+interface ValidationErrors {
+  [key: string]: string;
+}
+
+const validateFields = (data: Partial<ICar>): ValidationErrors => {
+  const errors: ValidationErrors = {};
+
+  Object.keys(data).forEach((key) => {
+    const value = data[key as keyof ICar];
+
+    if (value === '') {
+      errors[key] = 'This field is required.';
+    }
+
+    if (key === 'price' && isNaN(Number(value))) {
+      errors[key] = 'Price must be a number';
+    }
+    if (key === 'bhp' && isNaN(Number(value))) {
+      errors[key] = 'Horsepower must be a number';
+    }
+    if (key === 'mileage' && isNaN(Number(value))) {
+      errors[key] = 'Mileage must be a number';
+    }
+    if (key === 'year' && isNaN(Number(value))) {
+      errors[key] = 'Year must be a number';
+    }
+  });
+
+  return errors;
+};
+
 const AddVehicle: React.FC<IAddVehicle> = ({
   addOrEdit = 'add',
 }: IAddVehicle) => {
@@ -49,8 +80,9 @@ const AddVehicle: React.FC<IAddVehicle> = ({
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState<Partial<ICar>>(initialFormData);
-
-  const [error, setError] = useState(false);
+  const [validationErrors, setValidationErrors] = useState<ValidationErrors>(
+    {},
+  );
 
   useEffect(() => {
     setFormData(initialFormData);
@@ -58,8 +90,6 @@ const AddVehicle: React.FC<IAddVehicle> = ({
       setFormData(car);
     }
   }, [car, addOrEdit]);
-
-  const checkEmpty = (item: string | number) => item === '';
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -69,33 +99,40 @@ const AddVehicle: React.FC<IAddVehicle> = ({
     });
   };
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const handleSubmit = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
 
-    if (Object.values(formData).some(checkEmpty)) {
-      setError(true);
-    } else {
-      dispatch(addCar({ ...(formData as ICar), today }));
-      setFormData({});
-      setError(false);
-      navigate('/');
-    }
-  };
+      const errors = validateFields(formData);
 
-  const handleEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
-    if (Object.values(formData).some(checkEmpty)) {
-      setError(true);
-    } else {
-      if (car) {
-        dispatch(editCar({ id: car.id, updatedCar: formData }));
+      if (Object.keys(errors).length > 0) {
+        setValidationErrors(errors);
+      } else {
+        dispatch(addCar({ ...(formData as ICar), today }));
         setFormData({});
-        setError(false);
         navigate('/');
       }
-    }
-  };
+    },
+    [formData],
+  );
+
+  const handleEdit = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      const errors = validateFields(formData);
+
+      if (Object.keys(errors).length > 0) {
+        setValidationErrors(errors);
+      } else {
+        if (car) {
+          dispatch(editCar({ id: car.id, updatedCar: formData }));
+          setFormData({});
+          navigate('/');
+        }
+      }
+    },
+    [formData],
+  );
 
   const handleClear = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -122,12 +159,8 @@ const AddVehicle: React.FC<IAddVehicle> = ({
       >
         {textFields.map(([name, label]) => (
           <TextField
-            error={formData[name as keyof ICar] === '' && error}
-            helperText={
-              formData[name as keyof ICar] === '' &&
-              error &&
-              'This field is required.'
-            }
+            error={!!validationErrors[name]}
+            helperText={validationErrors[name]}
             key={name}
             id={name}
             name={name}

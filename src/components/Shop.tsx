@@ -10,61 +10,62 @@ import { useIntl } from 'react-intl';
 const Shop = () => {
   const rows = useSelector((state: RootState) => state.cars.value);
   const intl = useIntl();
+  const minWidth = 150;
   const columns: GridColDef[] = [
     {
       field: 'make',
       headerName: intl.formatMessage({ id: 'make' }),
-      width: 150,
+      minWidth: minWidth,
     },
     {
       field: 'model',
       headerName: intl.formatMessage({ id: 'model' }),
-      width: 150,
+      minWidth: minWidth,
     },
     {
       field: 'year',
       headerName: intl.formatMessage({ id: 'year' }),
-      width: 150,
+      minWidth: minWidth,
     },
     {
       field: 'mileage',
       headerName: intl.formatMessage({ id: 'mileage' }),
-      width: 150,
+      minWidth: minWidth,
     },
     {
       field: 'fuel',
       headerName: intl.formatMessage({ id: 'fuel' }),
-      width: 150,
+      minWidth: minWidth,
     },
     {
       field: 'bhp',
       headerName: intl.formatMessage({ id: 'bhp' }),
-      width: 150,
+      minWidth: minWidth,
     },
     {
       field: 'city',
       headerName: intl.formatMessage({ id: 'city' }),
-      width: 150,
+      minWidth: minWidth,
     },
     {
       field: 'country',
       headerName: intl.formatMessage({ id: 'country' }),
-      width: 150,
+      minWidth: minWidth,
     },
     {
       field: 'price',
       headerName: intl.formatMessage({ id: 'price' }),
-      width: 150,
+      minWidth: minWidth,
     },
     {
       field: 'description',
       headerName: intl.formatMessage({ id: 'description' }),
-      width: 150,
+      minWidth: minWidth,
     },
     {
       field: 'datePosted',
       headerName: intl.formatMessage({ id: 'dateposted' }),
-      width: 150,
+      minWidth: minWidth,
     },
     {
       field: 'actions',
@@ -72,7 +73,7 @@ const Shop = () => {
       headerName: '',
       sortable: false,
       disableColumnMenu: true,
-      width: 150,
+      width: minWidth,
       renderCell: (params: GridCellParams) => {
         const dispatch = useDispatch();
 
@@ -91,7 +92,7 @@ const Shop = () => {
     },
   ];
   return (
-    <Box sx={{ height: 400, width: '100%' }}>
+    <Box sx={{ height: '100%', width: '100%' }}>
       <DataGrid
         rows={rows}
         columns={columns}
