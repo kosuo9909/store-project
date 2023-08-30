@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  IAddVehicle,
   ICar,
   IUseAddOrEditProps,
   IUseAddOrEditReturn,
