@@ -9,62 +9,11 @@ import { RootState } from '../store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCar, editCar } from '../reducers/carsReducer';
 import { useNavigate } from 'react-router';
-import { ICar } from './interfaces/interfaces';
+import { IAddVehicle, ICar, ValidationErrors } from './interfaces/interfaces';
 import { useIntl } from 'react-intl';
 import './AddVehicle.scss';
-
-const textFields = [
-  ['make', 'Make'],
-  ['model', 'Model'],
-  ['year', 'Year'],
-  ['mileage', 'Mileage'],
-  ['fuel', 'Fuel'],
-  ['bhp', 'Horsepower'],
-  ['city', 'City'],
-  ['country', 'Country'],
-  ['price', 'Price'],
-  ['description', 'Description'],
-];
-
-const initialFormData = Object.fromEntries(
-  textFields.map(([key]) => [key, '']),
-);
-
-interface IAddVehicle {
-  addOrEdit: 'add' | 'edit';
-  car?: Partial<ICar>;
-}
-
-interface ValidationErrors {
-  [key: string]: string;
-}
-
-const validateFields = (data: Partial<ICar>): ValidationErrors => {
-  const errors: ValidationErrors = {};
-
-  Object.keys(data).forEach((key) => {
-    const value = data[key as keyof ICar];
-
-    if (value === '') {
-      errors[key] = 'This field is required.';
-    }
-
-    if (key === 'price' && isNaN(Number(value))) {
-      errors[key] = 'Price must be a number';
-    }
-    if (key === 'bhp' && isNaN(Number(value))) {
-      errors[key] = 'Horsepower must be a number';
-    }
-    if (key === 'mileage' && isNaN(Number(value))) {
-      errors[key] = 'Mileage must be a number';
-    }
-    if (key === 'year' && isNaN(Number(value))) {
-      errors[key] = 'Year must be a number';
-    }
-  });
-
-  return errors;
-};
+import { validateFields } from './helpers/validate';
+import { initialFormData, textFields } from './helpers/gridListFields';
 
 const AddVehicle: React.FC<IAddVehicle> = ({
   addOrEdit = 'add',
@@ -80,6 +29,7 @@ const AddVehicle: React.FC<IAddVehicle> = ({
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState<Partial<ICar>>(initialFormData);
+
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>(
     {},
   );

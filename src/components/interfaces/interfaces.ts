@@ -13,3 +13,12 @@ export interface ICar {
   price: number;
   description: string;
 }
+
+export interface ValidationErrors {
+  [key: string]: string;
+}
+
+export interface IAddVehicle {
+  addOrEdit: 'add' | 'edit';
+  car?: Partial<ICar>;
+}
