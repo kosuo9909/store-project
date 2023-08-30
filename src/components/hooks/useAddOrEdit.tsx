@@ -1,5 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { ICar, ValidationErrors } from '../interfaces/interfaces';
+import {
+  IAddVehicle,
+  ICar,
+  IUseAddOrEditProps,
+  IUseAddOrEditReturn,
+  ValidationErrors,
+} from '../interfaces/interfaces';
 import { useIntl } from 'react-intl';
 import { RootState } from '../../store/store';
 import { useNavigate } from 'react-router';
@@ -8,7 +14,9 @@ import { initialFormData } from '../helpers/gridListFields';
 import { validateFields } from '../helpers/validate';
 import { addCar, editCar } from '../../reducers/carsReducer';
 
-const useAddOrEdit = (addOrEdit: 'add' | 'edit') => {
+const useAddOrEdit = ({
+  addOrEdit,
+}: IUseAddOrEditProps): IUseAddOrEditReturn => {
   const dispatch = useDispatch();
 
   const intl = useIntl();

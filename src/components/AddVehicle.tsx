@@ -22,7 +22,7 @@ const AddVehicle: React.FC<IAddVehicle> = ({
     handleSubmit,
     validationErrors,
     formData,
-  } = useAddOrEdit(addOrEdit);
+  } = useAddOrEdit({ addOrEdit });
   return (
     <main>
       {addOrEdit === 'add' ? (
