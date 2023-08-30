@@ -1,7 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { ICar } from '../components/interfaces/interfaces';
 import { v4 as uuidv4 } from 'uuid';
-import { format, isToday } from 'date-fns';
 interface CarState {
   value: ICar[];
   selectedCar?: ICar;
@@ -23,12 +22,9 @@ export const carSlice = createSlice({
   reducers: {
     addCar: (state, action: PayloadAction<ICar>) => {
       const myID = uuidv4();
-      const todayString = action.payload.today;
       const carWithDateAndID = {
         ...action.payload,
-        datePosted: isToday(new Date())
-          ? `${todayString}, ${format(new Date(), 'HH:mm a')}`
-          : format(new Date(), 'HH:mm a'),
+        datePosted: new Date().toISOString(),
         id: myID,
       };
       state.value.push(carWithDateAndID);

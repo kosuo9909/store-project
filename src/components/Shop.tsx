@@ -64,9 +64,21 @@ const Shop = () => {
     },
     {
       field: 'datePosted',
-      headerName: intl.formatMessage({ id: 'dateposted' }),
-      minWidth: minWidth,
+      headerName: 'Date Posted',
+      minWidth: 180,
+      renderCell: (params: GridCellParams) => {
+        const datePosted = params.value as Date;
+
+        return intl.formatDate(datePosted, {
+          day: '2-digit',
+          month: '2-digit',
+          year: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+        });
+      },
     },
+
     {
       field: 'actions',
       // headerName: intl.formatMessage({ id: 'viewlisting' }),
