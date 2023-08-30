@@ -4,91 +4,25 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
-import React, { useCallback, useEffect, useState } from 'react';
-import { RootState } from '../store/store';
-import { useDispatch, useSelector } from 'react-redux';
-import { addCar, editCar } from '../reducers/carsReducer';
-import { useNavigate } from 'react-router';
-import { IAddVehicle, ICar, ValidationErrors } from './interfaces/interfaces';
-import { useIntl } from 'react-intl';
+import { IAddVehicle, ICar } from './interfaces/interfaces';
 import './AddVehicle.scss';
-import { validateFields } from './helpers/validate';
-import { initialFormData, textFields } from './helpers/gridListFields';
+import { textFields } from './helpers/gridListFields';
+import React from 'react';
+import { useIntl } from 'react-intl';
+import useAddOrEdit from './hooks/useAddOrEdit';
 
 const AddVehicle: React.FC<IAddVehicle> = ({
   addOrEdit = 'add',
 }: IAddVehicle) => {
-  const dispatch = useDispatch();
-
   const intl = useIntl();
-
-  const today = intl.formatMessage({ id: 'today' });
-
-  const car = useSelector((state: RootState) => state.cars.selectedCar);
-
-  const navigate = useNavigate();
-
-  const [formData, setFormData] = useState<Partial<ICar>>(initialFormData);
-
-  const [validationErrors, setValidationErrors] = useState<ValidationErrors>(
-    {},
-  );
-
-  useEffect(() => {
-    setFormData(initialFormData);
-    if (addOrEdit === 'edit' && car) {
-      setFormData(car);
-    }
-  }, [car, addOrEdit]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
-      e.preventDefault();
-
-      const errors = validateFields(formData);
-
-      if (Object.keys(errors).length > 0) {
-        setValidationErrors(errors);
-      } else {
-        dispatch(addCar({ ...(formData as ICar), today }));
-        setFormData({});
-        navigate('/');
-      }
-    },
-    [formData],
-  );
-
-  const handleEdit = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
-      e.preventDefault();
-      const errors = validateFields(formData);
-
-      if (Object.keys(errors).length > 0) {
-        setValidationErrors(errors);
-      } else {
-        if (car) {
-          dispatch(editCar({ id: car.id, updatedCar: formData }));
-          setFormData({});
-          navigate('/');
-        }
-      }
-    },
-    [formData],
-  );
-
-  const handleClear = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setFormData(initialFormData);
-  };
-
+  const {
+    handleChange,
+    handleClear,
+    handleEdit,
+    handleSubmit,
+    validationErrors,
+    formData,
+  } = useAddOrEdit(addOrEdit);
   return (
     <main>
       {addOrEdit === 'add' ? (
