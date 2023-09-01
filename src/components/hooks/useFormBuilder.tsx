@@ -13,7 +13,7 @@ import { validateFields } from '../helpers/validate';
 import { addCar, editCar } from '../../reducers/carsReducer';
 import { carValidationConfig } from '../helpers/validationConfigs';
 
-const useAddOrEdit = ({
+const useFormBuilder = ({
   addOrEdit,
 }: IUseAddOrEditProps): IUseAddOrEditReturn => {
   const dispatch = useDispatch();
@@ -93,4 +93,4 @@ const useAddOrEdit = ({
   };
 };
 
-export default useAddOrEdit;
+export default useFormBuilder;

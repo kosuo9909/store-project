@@ -9,7 +9,7 @@ import './AddVehicle.scss';
 import { textFields } from './helpers/gridListFields';
 import React from 'react';
 import { useIntl } from 'react-intl';
-import useAddOrEdit from './hooks/useAddOrEdit';
+import useFormBuilder from './hooks/useFormBuilder';
 
 const AddVehicle: React.FC<IAddVehicle> = ({
   addOrEdit = 'add',
@@ -22,7 +22,7 @@ const AddVehicle: React.FC<IAddVehicle> = ({
     handleSubmit,
     validationErrors,
     formData,
-  } = useAddOrEdit({ addOrEdit });
+  } = useFormBuilder({ addOrEdit });
   return (
     <main>
       {addOrEdit === 'add' ? (
