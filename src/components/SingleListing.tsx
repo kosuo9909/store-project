@@ -58,16 +58,22 @@ export default function SingleListing({ car, button }: SingleListingProps) {
               {car.price} USD
             </Typography>
             <Typography variant="body2" sx={typographySxProps}>
-              {intl.formatMessage({ id: 'mileage' })} - {car.mileage}
+              {intl.formatMessage(
+                { id: 'mileage' },
+                { mileageValue: car.mileage },
+              )}
             </Typography>
             <Typography variant="body2" sx={typographySxProps}>
-              {intl.formatMessage({ id: 'yearOfProduction' })} - {car.year}
+              {intl.formatMessage(
+                { id: 'yearOfProduction' },
+                { year: car.year },
+              )}
             </Typography>
             <Typography variant="body2" sx={typographySxProps}>
-              {intl.formatMessage({ id: 'fuel' })} - {car.fuel}
+              {intl.formatMessage({ id: 'fuel' }, { fuelType: car.fuel })}
             </Typography>
             <Typography variant="body2" sx={typographySxProps}>
-              {intl.formatMessage({ id: 'bhp' })} - {car.bhp}
+              {intl.formatMessage({ id: 'bhp' }, { bhpValue: car.bhp })}
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
               {intl.formatMessage({ id: 'description' })} <br></br>

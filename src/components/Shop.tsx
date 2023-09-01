@@ -30,17 +30,17 @@ const Shop = () => {
     },
     {
       field: 'mileage',
-      headerName: intl.formatMessage({ id: 'mileage' }),
+      headerName: intl.formatMessage({ id: 'mileageColumn' }),
       minWidth: minWidth,
     },
     {
       field: 'fuel',
-      headerName: intl.formatMessage({ id: 'fuel' }),
+      headerName: intl.formatMessage({ id: 'fuelColumn' }),
       minWidth: minWidth,
     },
     {
       field: 'bhp',
-      headerName: intl.formatMessage({ id: 'bhp' }),
+      headerName: intl.formatMessage({ id: 'bhpColumn' }),
       minWidth: minWidth,
     },
     {
