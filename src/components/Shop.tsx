@@ -9,6 +9,7 @@ import { useIntl } from 'react-intl';
 
 const Shop = () => {
   const rows = useSelector((state: RootState) => state.cars.value);
+  const dispatch = useDispatch();
   const intl = useIntl();
   const minWidth = 150;
   const columns: GridColDef[] = [
@@ -81,14 +82,11 @@ const Shop = () => {
 
     {
       field: 'actions',
-      // headerName: intl.formatMessage({ id: 'viewlisting' }),
       headerName: '',
       sortable: false,
       disableColumnMenu: true,
       width: minWidth,
       renderCell: (params: GridCellParams) => {
-        const dispatch = useDispatch();
-
         const handleViewCar = (id: string) => {
           dispatch(selectCar(id));
         };
@@ -103,6 +101,10 @@ const Shop = () => {
       },
     },
   ];
+  const CustomNoRowsOverlay = () => {
+    return <div></div>;
+  };
+
   return (
     <Box sx={{ height: '100%', width: '100%' }}>
       <DataGrid
@@ -117,7 +119,9 @@ const Shop = () => {
         }}
         pageSizeOptions={[5]}
         checkboxSelection
-        disableRowSelectionOnClick
+        slots={{
+          noRowsOverlay: CustomNoRowsOverlay,
+        }}
       />
     </Box>
   );
