@@ -41,7 +41,7 @@ const AddVehicle: React.FC<IAddVehicle> = ({
           gap: 3,
         }}
       >
-        {textFields.map(([name, label]) => (
+        {Object.entries(textFields).map(([name, label]) => (
           <TextField
             error={!!validationErrors[name]}
             helperText={validationErrors[name]}

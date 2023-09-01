@@ -5,22 +5,18 @@ import {
   IUseAddOrEditReturn,
   ValidationErrors,
 } from '../interfaces/interfaces';
-import { useIntl } from 'react-intl';
 import { RootState } from '../../store/store';
 import { useNavigate } from 'react-router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { initialFormData } from '../helpers/gridListFields';
 import { validateFields } from '../helpers/validate';
 import { addCar, editCar } from '../../reducers/carsReducer';
+import { carValidationConfig } from '../helpers/validationConfigs';
 
 const useAddOrEdit = ({
   addOrEdit,
 }: IUseAddOrEditProps): IUseAddOrEditReturn => {
   const dispatch = useDispatch();
-
-  const intl = useIntl();
-
-  const today = intl.formatMessage({ id: 'today' });
 
   const car = useSelector((state: RootState) => state.cars.selectedCar);
 
@@ -51,23 +47,23 @@ const useAddOrEdit = ({
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
 
-      const errors = validateFields(formData);
+      const errors = validateFields(formData, carValidationConfig);
 
       if (Object.keys(errors).length > 0) {
         setValidationErrors(errors);
       } else {
-        dispatch(addCar({ ...(formData as ICar), today }));
+        dispatch(addCar({ ...(formData as ICar) }));
         setFormData({});
         navigate('/');
       }
     },
-    [formData],
+    [formData, dispatch, navigate],
   );
 
   const handleEdit = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
-      const errors = validateFields(formData);
+      const errors = validateFields(formData, carValidationConfig);
 
       if (Object.keys(errors).length > 0) {
         setValidationErrors(errors);
@@ -79,7 +75,7 @@ const useAddOrEdit = ({
         }
       }
     },
-    [formData],
+    [formData, car, dispatch, navigate],
   );
 
   const handleClear = (e: React.MouseEvent<HTMLButtonElement>) => {

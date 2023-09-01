@@ -1,39 +1,23 @@
-import { ICar, ValidationErrors } from '../interfaces/interfaces';
+import { ValidationErrors } from '../interfaces/interfaces';
+import { carValidationConfig } from './validationConfigs';
+import { ValidatorFuncSignature } from './validationConfigs';
 
-export const validateFields = (data: Partial<ICar>): ValidationErrors => {
+export const validateFields = (
+  data: Record<string, string | number>,
+  config: Record<string, ValidatorFuncSignature[]>,
+): ValidationErrors => {
   const errors: ValidationErrors = {};
 
-  Object.keys(data).forEach((key) => {
-    const value = data[key as keyof ICar];
-    const numValue = Number(value);
+  Object.keys(config).forEach((key) => {
+    const value = data[key];
 
-    if (value === '') {
-      errors[key] = 'This field is required.';
-    } else if (Number.isNaN(numValue)) {
-      if (key === 'price') {
-        errors[key] = 'Price must be a number';
-      }
-      if (key === 'bhp') {
-        errors[key] = 'Horsepower must be a number';
-      }
-      if (key === 'mileage') {
-        errors[key] = 'Mileage must be a number';
-      }
-      if (key === 'year') {
-        errors[key] = 'Year must be a number';
-      }
-    } else {
-      if (key === 'price' && numValue <= 0) {
-        errors[key] = 'The price has to be a positive number.';
-      }
-      if (key === 'bhp' && numValue <= 0) {
-        errors[key] = 'The horsepower has to be a positive number.';
-      }
-      if (key === 'mileage' && numValue <= 0) {
-        errors[key] = 'The mileage has to be a positive number.';
-      }
-      if (key === 'year' && (numValue > 2024 || numValue < 1886)) {
-        errors[key] = 'The year must be between 1886 and 2024.';
+    const validationFuncsToBeChecked = carValidationConfig[key];
+
+    for (const validationFunction of validationFuncsToBeChecked) {
+      const error = validationFunction(value, key);
+      if (error) {
+        errors[key] = error;
+        break;
       }
     }
   });
