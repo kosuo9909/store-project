@@ -28,6 +28,7 @@ const Shop = () => {
       field: 'year',
       headerName: intl.formatMessage({ id: 'year', defaultMessage: 'Year' }),
       minWidth: minWidth,
+      type: 'number',
     },
     {
       field: 'mileageColumn',
@@ -36,6 +37,7 @@ const Shop = () => {
         defaultMessage: 'Mileage',
       }),
       minWidth: minWidth,
+      type: 'number',
     },
     {
       field: 'fuelColumn',
@@ -52,6 +54,7 @@ const Shop = () => {
         defaultMessage: 'Horsepower',
       }),
       minWidth: minWidth,
+      type: 'number',
     },
     {
       field: 'city',
@@ -70,6 +73,7 @@ const Shop = () => {
       field: 'price',
       headerName: intl.formatMessage({ id: 'price', defaultMessage: 'Price' }),
       minWidth: minWidth,
+      type: 'number',
     },
     {
       field: 'description',
