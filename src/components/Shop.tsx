@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { selectCar } from '../reducers/carsReducer';
 import { useIntl } from 'react-intl';
+import { formatTimeElapsed } from './helpers/formatTimeElapsed';
 
 const Shop = () => {
   const rows = useSelector((state: RootState) => state.cars.value);
@@ -15,68 +16,81 @@ const Shop = () => {
   const columns: GridColDef[] = [
     {
       field: 'make',
-      headerName: intl.formatMessage({ id: 'make' }),
+      headerName: intl.formatMessage({ id: 'make', defaultMessage: 'Make' }),
       minWidth: minWidth,
     },
     {
       field: 'model',
-      headerName: intl.formatMessage({ id: 'model' }),
+      headerName: intl.formatMessage({ id: 'model', defaultMessage: 'Model' }),
       minWidth: minWidth,
     },
     {
       field: 'year',
-      headerName: intl.formatMessage({ id: 'year' }),
+      headerName: intl.formatMessage({ id: 'year', defaultMessage: 'Year' }),
       minWidth: minWidth,
     },
     {
-      field: 'mileage',
-      headerName: intl.formatMessage({ id: 'mileageColumn' }),
+      field: 'mileageColumn',
+      headerName: intl.formatMessage({
+        id: 'mileageColumn',
+        defaultMessage: 'Mileage',
+      }),
       minWidth: minWidth,
     },
     {
-      field: 'fuel',
-      headerName: intl.formatMessage({ id: 'fuelColumn' }),
+      field: 'fuelColumn',
+      headerName: intl.formatMessage({
+        id: 'fuelColumn',
+        defaultMessage: 'Fuel',
+      }),
       minWidth: minWidth,
     },
     {
-      field: 'bhp',
-      headerName: intl.formatMessage({ id: 'bhpColumn' }),
+      field: 'bhpColumn',
+      headerName: intl.formatMessage({
+        id: 'bhpColumn',
+        defaultMessage: 'Horsepower',
+      }),
       minWidth: minWidth,
     },
     {
       field: 'city',
-      headerName: intl.formatMessage({ id: 'city' }),
+      headerName: intl.formatMessage({ id: 'city', defaultMessage: 'City' }),
       minWidth: minWidth,
     },
     {
       field: 'country',
-      headerName: intl.formatMessage({ id: 'country' }),
+      headerName: intl.formatMessage({
+        id: 'country',
+        defaultMessage: 'Country',
+      }),
       minWidth: minWidth,
     },
     {
       field: 'price',
-      headerName: intl.formatMessage({ id: 'price' }),
+      headerName: intl.formatMessage({ id: 'price', defaultMessage: 'Price' }),
       minWidth: minWidth,
     },
     {
       field: 'description',
-      headerName: intl.formatMessage({ id: 'description' }),
+      headerName: intl.formatMessage({
+        id: 'description',
+        defaultMessage: 'Description',
+      }),
       minWidth: minWidth,
     },
     {
       field: 'datePosted',
       headerName: 'Date Posted',
       minWidth: 180,
+      type: 'dateTime',
+      valueGetter: (params) => {
+        return new Date(params.value);
+      },
       renderCell: (params: GridCellParams) => {
         const datePosted = params.value as Date;
 
-        return intl.formatDate(datePosted, {
-          day: '2-digit',
-          month: '2-digit',
-          year: '2-digit',
-          hour: '2-digit',
-          minute: '2-digit',
-        });
+        return formatTimeElapsed(datePosted, intl);
       },
     },
 
