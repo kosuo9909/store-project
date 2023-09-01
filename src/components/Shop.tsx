@@ -81,8 +81,8 @@ const Shop = () => {
     },
     {
       field: 'datePosted',
-      headerName: 'Date Posted',
-      minWidth: 180,
+      headerName: intl.formatMessage({ id: 'datePosted' }),
+      minWidth: 200,
       type: 'dateTime',
       valueGetter: (params) => {
         return new Date(params.value);

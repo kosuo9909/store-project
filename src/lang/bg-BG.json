@@ -3,6 +3,9 @@
   "bg-BG": "Български",
   "today": "Днес",
   "addNavButton": "Добави превозно средство",
+  "addedNow": "Добавен току-що.",
+  "addedSecondsAgo": "Добавена преди {seconds, plural, one {# секунда} other {# минута}}.",
+  "addedMinutesAgo": "Добавена преди {minutes, plural, one {# минута} other {# минути}}.",
   "home": "Начало",
   "add": "Добави превозно средство",
   "edit": "Промени",
@@ -25,5 +28,5 @@
   "submit": "Изпрати",
   "remove": "Изтрий",
   "viewlisting": "Виж обявата",
-  "dateposted": "Качена на"
+  "datePosted": "Качена на"
 }

@@ -8,16 +8,26 @@ export const formatTimeElapsed = (date: Date | string, intl: IntlShape) => {
   );
 
   if (timeElapsedInSeconds < 5) {
-    return 'added just now';
+    return intl.formatMessage({ id: 'addedNow' });
   }
   if (timeElapsedInSeconds < 60) {
-    return `added ${timeElapsedInSeconds} seconds ago`;
+    return intl.formatMessage(
+      {
+        id: 'addedSecondsAgo',
+      },
+      { seconds: timeElapsedInSeconds },
+    );
   }
   if (timeElapsedInSeconds < 3600) {
-    return `added ${Math.floor(timeElapsedInSeconds / 60)} minutes ago`;
+    return intl.formatMessage(
+      {
+        id: 'addedMinutesAgo',
+      },
+      { minutes: Math.floor(timeElapsedInSeconds / 60) },
+    );
   }
 
-  return `added on ${intl.formatDate(dateObject, {
+  return `${intl.formatDate(dateObject, {
     day: '2-digit',
     month: '2-digit',
     year: '2-digit',

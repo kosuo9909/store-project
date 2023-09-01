@@ -3,6 +3,9 @@
   "bg-BG": "Bulgarian",
   "today": "Today",
   "addNavButton": "Add vehicle",
+  "addedNow": "Added just now.",
+  "addedSecondsAgo": "Added {seconds, plural, one {# second} other {# seconds}} ago.",
+  "addedMinutesAgo": "Added {minutes, plural, one {# minute} other {# minutes}} ago.",
   "home": "Home",
   "add": "Add a vehicle",
   "edit": "Edit",
@@ -24,5 +27,5 @@
   "submit": "Submit",
   "remove": "Remove",
   "viewlisting": "View listing",
-  "dateposted": "Date posted"
+  "datePosted": "Date posted"
 }
