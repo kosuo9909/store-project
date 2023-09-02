@@ -9,7 +9,7 @@ import CarDetail from './components/CarDetail';
 import Shop from './components/Shop';
 import { createTheme } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
-import NavbarWrapper from './components/NavbarWrapper';
+import App from './App';
 
 const theme = createTheme({
   palette: {
@@ -25,7 +25,7 @@ const theme = createTheme({
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <NavbarWrapper />,
+    element: <App />,
     children: [
       {
         path: '/',
