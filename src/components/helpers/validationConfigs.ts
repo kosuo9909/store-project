@@ -1,36 +1,39 @@
 import { carTextFields } from './gridListFields';
 
 export type ValidatorFuncSignature = (
+  itemDict: Record<string, string>,
   value: string | number,
   key: string,
 ) => string | null;
 
-const isRequired: ValidatorFuncSignature = (value, key) => {
+const isRequired: ValidatorFuncSignature = (itemDict, value, key) => {
   if (value === '') {
-    return `${carTextFields[key as string]} is required.`;
+    return `${itemDict[key as string]} is required.`;
   }
   return null;
 };
-const mustBeNumber: ValidatorFuncSignature = (value, key) => {
+const mustBeNumber: ValidatorFuncSignature = (itemDict, value, key) => {
   if (isNaN(Number(value))) {
-    return `${carTextFields[key as string]} must be a number.`;
+    return `${itemDict[key as string]} must be a number.`;
   }
   return null;
 };
-const mustBePositive: ValidatorFuncSignature = (value, key) => {
+const mustBePositive: ValidatorFuncSignature = (itemDict, value, key) => {
   if (Number(value) < 0) {
-    return `${carTextFields[key as string]} must be a positive number.`;
+    return `${itemDict[key as string]} must be a positive number.`;
   }
   return null;
 };
 const isWithinRange =
-  (min: number, max: number): ValidatorFuncSignature =>
-  (value, key) => {
+  (
+    itemDict: Record<string, string>,
+    min: number,
+    max: number,
+  ): ValidatorFuncSignature =>
+  (itemDict, value, key) => {
     const numValue = Number(value);
     if (numValue < min || numValue > max) {
-      return `${
-        carTextFields[key as string]
-      } must be between ${min} and ${max}.`;
+      return `${itemDict[key as string]} must be between ${min} and ${max}.`;
     }
     return null;
   };
@@ -39,7 +42,7 @@ export const carValidationConfig: Record<string, ValidatorFuncSignature[]> = {
   price: [isRequired, mustBeNumber, mustBePositive],
   make: [isRequired],
   model: [isRequired],
-  year: [isRequired, mustBeNumber, isWithinRange(1886, 2024)],
+  year: [isRequired, mustBeNumber, isWithinRange(carTextFields, 1886, 2024)],
   mileageColumn: [isRequired, mustBeNumber, mustBePositive],
   fuelColumn: [isRequired],
   bhpColumn: [isRequired],
