@@ -1,8 +1,8 @@
 import React from 'react';
 
 export interface ICar {
-  today?: string;
   id: string;
+  today?: string;
   datePosted: string;
   make: string;
   model: string;

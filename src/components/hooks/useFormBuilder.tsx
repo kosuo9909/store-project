@@ -1,39 +1,65 @@
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  ICar,
-  IUseAddOrEditProps,
-  IUseAddOrEditReturn,
-  ValidationErrors,
-} from '../interfaces/interfaces';
-import { RootState } from '../../store/store';
+import { ValidationErrors } from '../interfaces/interfaces';
 import { useNavigate } from 'react-router';
 import React, { useCallback, useEffect, useState } from 'react';
-import { initialFormData } from '../helpers/gridListFields';
 import { validateFields } from '../helpers/validate';
-import { addCar, editCar } from '../../reducers/carsReducer';
-import { carValidationConfig } from '../helpers/validationConfigs';
+import { ValidatorFuncSignature } from '../helpers/validationConfigs';
 
-const useFormBuilder = ({
-  addOrEdit,
-}: IUseAddOrEditProps): IUseAddOrEditReturn => {
-  const dispatch = useDispatch();
+interface IFormBuilderReturn<T> {
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleFormAction: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  handleClear: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  validationErrors: Record<string, string | number>;
+  formData: T;
+}
+interface IFormBuilderProps<T> {
+  initialData: T;
+  validationConfig: Record<string, ValidatorFuncSignature[]>;
+  onSubmit: (data: T) => void;
+  isEditing?: boolean;
+  onEdit?: (key: keyof T, value: string | number) => void;
+  editedData?: T;
+}
 
-  const car = useSelector((state: RootState) => state.cars.selectedCar);
-
+const useFormBuilder = <T extends Record<string, string | number>>({
+  initialData,
+  validationConfig,
+  onSubmit,
+  isEditing,
+  onEdit,
+  editedData,
+}: IFormBuilderProps<T>): IFormBuilderReturn<T> => {
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState<Partial<ICar>>(initialFormData);
+  const [formData, setFormData] = useState<T>(initialData);
 
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>(
     {},
   );
 
   useEffect(() => {
-    setFormData(initialFormData);
-    if (addOrEdit === 'edit' && car) {
-      setFormData(car);
+    if (isEditing && editedData) {
+      setFormData(editedData);
+    } else {
+      setFormData(initialData);
     }
-  }, [car, addOrEdit]);
+  }, [isEditing, editedData, initialData]);
+
+  const handleFormAction = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+
+      const errors = validateFields(formData, validationConfig);
+
+      if (Object.keys(errors).length > 0) {
+        setValidationErrors(errors);
+      } else {
+        onSubmit(formData);
+        navigate('/');
+        setFormData(initialData);
+      }
+    },
+    [formData, navigate, initialData, onSubmit, validationConfig],
+  );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -43,51 +69,15 @@ const useFormBuilder = ({
     });
   };
 
-  const handleSubmit = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
-      e.preventDefault();
-
-      const errors = validateFields(formData, carValidationConfig);
-
-      if (Object.keys(errors).length > 0) {
-        setValidationErrors(errors);
-      } else {
-        dispatch(addCar({ ...(formData as ICar) }));
-        setFormData({});
-        navigate('/');
-      }
-    },
-    [formData, dispatch, navigate],
-  );
-
-  const handleEdit = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
-      e.preventDefault();
-      const errors = validateFields(formData, carValidationConfig);
-
-      if (Object.keys(errors).length > 0) {
-        setValidationErrors(errors);
-      } else {
-        if (car) {
-          dispatch(editCar({ id: car.id, updatedCar: formData }));
-          setFormData({});
-          navigate('/');
-        }
-      }
-    },
-    [formData, car, dispatch, navigate],
-  );
-
   const handleClear = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setFormData(initialFormData);
+    setFormData(initialData);
   };
 
   return {
+    handleFormAction,
     handleChange,
     handleClear,
-    handleEdit,
-    handleSubmit,
     validationErrors,
     formData,
   };

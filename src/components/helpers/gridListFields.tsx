@@ -1,4 +1,4 @@
-export const textFields: Record<string, string> = {
+export const carTextFields: Record<string, string> = {
   make: 'Make',
   model: 'Model',
   year: 'Year',
@@ -11,6 +11,6 @@ export const textFields: Record<string, string> = {
   description: 'Description',
 };
 
-export const initialFormData = Object.fromEntries(
-  Object.keys(textFields).map((key) => [key, '']),
+export const initialCarFormData = Object.fromEntries(
+  Object.keys(carTextFields).map((key) => [key, '']),
 );

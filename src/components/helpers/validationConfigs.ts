@@ -1,4 +1,4 @@
-import { textFields } from './gridListFields';
+import { carTextFields } from './gridListFields';
 
 export type ValidatorFuncSignature = (
   value: string | number,
@@ -7,19 +7,19 @@ export type ValidatorFuncSignature = (
 
 const isRequired: ValidatorFuncSignature = (value, key) => {
   if (value === '') {
-    return `${textFields[key as string]} is required.`;
+    return `${carTextFields[key as string]} is required.`;
   }
   return null;
 };
 const mustBeNumber: ValidatorFuncSignature = (value, key) => {
   if (isNaN(Number(value))) {
-    return `${textFields[key as string]} must be a number.`;
+    return `${carTextFields[key as string]} must be a number.`;
   }
   return null;
 };
 const mustBePositive: ValidatorFuncSignature = (value, key) => {
   if (Number(value) < 0) {
-    return `${textFields[key as string]} must be a positive number.`;
+    return `${carTextFields[key as string]} must be a positive number.`;
   }
   return null;
 };
@@ -28,7 +28,9 @@ const isWithinRange =
   (value, key) => {
     const numValue = Number(value);
     if (numValue < min || numValue > max) {
-      return `${textFields[key as string]} must be between ${min} and ${max}.`;
+      return `${
+        carTextFields[key as string]
+      } must be between ${min} and ${max}.`;
     }
     return null;
   };

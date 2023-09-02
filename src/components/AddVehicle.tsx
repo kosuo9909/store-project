@@ -6,23 +6,49 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import { IAddVehicle, ICar } from './interfaces/interfaces';
 import './AddVehicle.scss';
-import { textFields } from './helpers/gridListFields';
+import { carTextFields, initialCarFormData } from './helpers/gridListFields';
 import React from 'react';
 import { useIntl } from 'react-intl';
 import useFormBuilder from './hooks/useFormBuilder';
+import { carValidationConfig } from './helpers/validationConfigs';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCar, editCar } from '../reducers/carsReducer';
+import { RootState } from '../store/store';
 
 const AddVehicle: React.FC<IAddVehicle> = ({
   addOrEdit = 'add',
 }: IAddVehicle) => {
   const intl = useIntl();
+  const dispatch = useDispatch();
+  const selectedCar = useSelector((state: RootState) => state.cars.selectedCar);
+  const handleSubmit = (formData: Partial<ICar>) => {
+    dispatch(addCar(formData as ICar));
+  };
+  const handleEdit = (formData: Partial<ICar>, carId: string) => {
+    const updatedCar = {
+      ...formData,
+    };
+    dispatch(editCar({ id: carId, updatedCar }));
+  };
+
   const {
+    handleFormAction,
     handleChange,
     handleClear,
-    handleEdit,
-    handleSubmit,
     validationErrors,
     formData,
-  } = useFormBuilder({ addOrEdit });
+  } = useFormBuilder<Partial<ICar>>({
+    initialData: initialCarFormData,
+    validationConfig: carValidationConfig,
+    onSubmit:
+      addOrEdit === 'add'
+        ? handleSubmit
+        : (formData) => handleEdit(formData, selectedCar?.id ?? ''),
+    isEditing: addOrEdit === 'edit' ? true : false,
+    editedData: selectedCar,
+  });
+
+  // For 'edit' mode
   return (
     <main>
       {addOrEdit === 'add' ? (
@@ -41,7 +67,7 @@ const AddVehicle: React.FC<IAddVehicle> = ({
           gap: 3,
         }}
       >
-        {Object.entries(textFields).map(([name, label]) => (
+        {Object.entries(carTextFields).map(([name, label]) => (
           <TextField
             error={!!validationErrors[name]}
             helperText={validationErrors[name]}
@@ -50,9 +76,7 @@ const AddVehicle: React.FC<IAddVehicle> = ({
             name={name}
             type="input"
             label={intl.formatMessage({ id: name })}
-            value={
-              formData[name as keyof ICar] ? formData[name as keyof ICar] : ''
-            }
+            value={formData[name as keyof Partial<ICar>]}
             placeholder={label}
             onChange={handleChange}
             multiline={formData[name as keyof ICar] === 'description'}
@@ -70,7 +94,7 @@ const AddVehicle: React.FC<IAddVehicle> = ({
           </Button>
           <Button
             variant="contained"
-            onClick={handleSubmit}
+            onClick={handleFormAction}
             endIcon={<SendIcon />}
           >
             {intl.formatMessage({ id: 'submit' })}
@@ -88,7 +112,7 @@ const AddVehicle: React.FC<IAddVehicle> = ({
           </Button>
           <Button
             variant="contained"
-            onClick={handleEdit}
+            onClick={handleFormAction}
             endIcon={<SendIcon />}
           >
             {intl.formatMessage({ id: 'submit' })}
