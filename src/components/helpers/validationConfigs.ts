@@ -1,5 +1,3 @@
-import { carTextFields } from './gridListFields';
-
 export type ValidatorFuncSignature = (
   itemDict: Record<string, string>,
   value: string | number,
@@ -25,11 +23,7 @@ const mustBePositive: ValidatorFuncSignature = (itemDict, value, key) => {
   return null;
 };
 const isWithinRange =
-  (
-    itemDict: Record<string, string>,
-    min: number,
-    max: number,
-  ): ValidatorFuncSignature =>
+  (min: number, max: number): ValidatorFuncSignature =>
   (itemDict, value, key) => {
     const numValue = Number(value);
     if (numValue < min || numValue > max) {
@@ -42,7 +36,7 @@ export const carValidationConfig: Record<string, ValidatorFuncSignature[]> = {
   price: [isRequired, mustBeNumber, mustBePositive],
   make: [isRequired],
   model: [isRequired],
-  year: [isRequired, mustBeNumber, isWithinRange(carTextFields, 1886, 2024)],
+  year: [isRequired, mustBeNumber, isWithinRange(1886, 2024)],
   mileageColumn: [isRequired, mustBeNumber, mustBePositive],
   fuelColumn: [isRequired],
   bhpColumn: [isRequired],
