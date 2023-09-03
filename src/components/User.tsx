@@ -17,13 +17,18 @@ const User: React.FC = () => {
   const handleSubmit = (formData: Partial<IUser>) => {
     console.log('dispatched' + formData);
   };
-  const { handleFormAction, handleChange, handleClear, validationErrors } =
-    useFormBuilder<Partial<IUser>>({
-      initialData: initialUserFormData,
-      validationConfig: userValidationConfig,
-      onSubmit: handleSubmit,
-      textFields: userTextFields,
-    });
+  const {
+    handleFormAction,
+    handleChange,
+    handleClear,
+    validationErrors,
+    formData,
+  } = useFormBuilder<Partial<IUser>>({
+    initialData: initialUserFormData,
+    validationConfig: userValidationConfig,
+    onSubmit: handleSubmit,
+    textFields: userTextFields,
+  });
 
   return (
     <main>
@@ -47,6 +52,7 @@ const User: React.FC = () => {
             id={name}
             name={name}
             type="input"
+            value={formData[name as keyof Partial<IUser>]}
             label={intl.formatMessage({ id: name })}
             placeholder={label}
             onChange={handleChange}
