@@ -6,14 +6,14 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import { IAddVehicle, ICar } from '../interfaces/interfaces';
 import './AddVehicle.scss';
-import { carTextFields, initialCarFormData } from '../helpers/gridListFields';
+import { carTextFields, initialCarFormData } from '../helpers/carFields';
 import React from 'react';
 import { useIntl } from 'react-intl';
 import useFormBuilder from '../hooks/useFormBuilder';
-import { carValidationConfig } from '../helpers/validationConfigs';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCar, editCar } from '../reducers/carsReducer';
 import { RootState } from '../store/store';
+import { carValidationConfig } from '../helpers/validationConfigs';
 
 const AddVehicle: React.FC<IAddVehicle> = ({
   addOrEdit = 'add',
@@ -46,6 +46,7 @@ const AddVehicle: React.FC<IAddVehicle> = ({
         : (formData) => handleEdit(formData, selectedCar?.id ?? ''),
     isEditing: addOrEdit === 'edit' ? true : false,
     editedData: selectedCar,
+    textFields: carTextFields,
   });
 
   // For 'edit' mode

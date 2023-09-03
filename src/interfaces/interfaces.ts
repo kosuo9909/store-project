@@ -16,6 +16,15 @@ export interface ICar {
   description: string;
 }
 
+export interface IUser {
+  name: string;
+  lastName: string;
+  age: number;
+  job: string;
+  city: string;
+  country: string;
+}
+
 export interface ValidationErrors {
   [key: string]: string;
 }

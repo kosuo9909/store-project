@@ -1,3 +1,5 @@
+import { generateFormData } from './generateFormData';
+
 export const carTextFields: Record<string, string> = {
   make: 'Make',
   model: 'Model',
@@ -11,6 +13,4 @@ export const carTextFields: Record<string, string> = {
   description: 'Description',
 };
 
-export const initialCarFormData = Object.fromEntries(
-  Object.keys(carTextFields).map((key) => [key, '']),
-);
+export const initialCarFormData = generateFormData(carTextFields);

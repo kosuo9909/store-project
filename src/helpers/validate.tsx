@@ -1,7 +1,6 @@
 import { IntlShape } from 'react-intl';
 import { ValidationErrors } from '../interfaces/interfaces';
-import { carValidationConfig } from './validationConfigs';
-import { ValidatorFuncSignature } from './validationConfigs';
+import { ValidatorFuncSignature } from './validationFuncs';
 
 export const validateFields = (
   data: Record<string, string | number>,
@@ -13,8 +12,7 @@ export const validateFields = (
 
   Object.keys(config).forEach((key) => {
     const value = data[key];
-
-    const validationFuncsToBeChecked = carValidationConfig[key];
+    const validationFuncsToBeChecked = config[key];
 
     for (const validationFunction of validationFuncsToBeChecked) {
       const error = validationFunction(itemDict, value, key, intl);

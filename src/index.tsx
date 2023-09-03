@@ -10,6 +10,7 @@ import Shop from './components/Shop';
 import { createTheme } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
 import App from './App';
+import User from './components/User';
 
 const theme = createTheme({
   palette: {
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
       { path: 'add', element: <AddVehicle addOrEdit="add" /> },
       { path: 'edit', element: <AddVehicle addOrEdit="edit" /> },
       { path: ':carID', element: <CarDetail /> },
+      { path: 'user', element: <User /> },
     ],
   },
 ]);

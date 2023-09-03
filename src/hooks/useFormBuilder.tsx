@@ -2,8 +2,7 @@ import { ValidationErrors } from '../interfaces/interfaces';
 import { useNavigate } from 'react-router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { validateFields } from '../helpers/validate';
-import { ValidatorFuncSignature } from '../helpers/validationConfigs';
-import { carTextFields } from '../helpers/gridListFields';
+import { ValidatorFuncSignature } from '../helpers/validationFuncs';
 import { useIntl } from 'react-intl';
 
 interface IFormBuilderReturn<T> {
@@ -16,6 +15,7 @@ interface IFormBuilderReturn<T> {
 interface IFormBuilderProps<T> {
   initialData: T;
   validationConfig: Record<string, ValidatorFuncSignature[]>;
+  textFields: Record<string, string>;
   onSubmit: (data: T) => void;
   isEditing?: boolean;
   onEdit?: (key: keyof T, value: string | number) => void;
@@ -25,6 +25,7 @@ interface IFormBuilderProps<T> {
 const useFormBuilder = <T extends Record<string, string | number>>({
   initialData,
   validationConfig,
+  textFields,
   onSubmit,
   isEditing,
   onEdit,
@@ -55,7 +56,7 @@ const useFormBuilder = <T extends Record<string, string | number>>({
       const errors = validateFields(
         formData,
         validationConfig,
-        carTextFields,
+        textFields,
         intl,
       );
 
@@ -67,7 +68,15 @@ const useFormBuilder = <T extends Record<string, string | number>>({
         setFormData(initialData);
       }
     },
-    [formData, navigate, initialData, onSubmit, validationConfig, intl],
+    [
+      formData,
+      navigate,
+      initialData,
+      onSubmit,
+      validationConfig,
+      intl,
+      textFields,
+    ],
   );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
