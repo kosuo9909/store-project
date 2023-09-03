@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { selectCar } from '../reducers/carsReducer';
 import { useIntl } from 'react-intl';
-import { formatTimeElapsed } from './helpers/formatTimeElapsed';
+import { formatTimeElapsed } from '../helpers/formatTimeElapsed';
 
 const Shop = () => {
   const rows = useSelector((state: RootState) => state.cars.value);

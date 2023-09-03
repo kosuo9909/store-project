@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { ICar } from '../components/interfaces/interfaces';
+import { ICar } from '../interfaces/interfaces';
 import { v4 as uuidv4 } from 'uuid';
 interface CarState {
   value: ICar[];

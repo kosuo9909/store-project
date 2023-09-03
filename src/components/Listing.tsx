@@ -1,4 +1,4 @@
-import { ICar } from './interfaces/interfaces';
+import { ICar } from '../interfaces/interfaces';
 import SingleListing from './SingleListing';
 
 interface SingleListingProps {
