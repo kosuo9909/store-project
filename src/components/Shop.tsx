@@ -124,24 +124,26 @@ const Shop = () => {
   };
 
   return (
-    <Box sx={{ height: '100%', width: '100%' }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 5,
+    <main>
+      <Box sx={{ height: '100%', width: '100%' }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 5,
+              },
             },
-          },
-        }}
-        pageSizeOptions={[5]}
-        checkboxSelection
-        slots={{
-          noRowsOverlay: CustomNoRowsOverlay,
-        }}
-      />
-    </Box>
+          }}
+          pageSizeOptions={[5]}
+          checkboxSelection
+          slots={{
+            noRowsOverlay: CustomNoRowsOverlay,
+          }}
+        />
+      </Box>
+    </main>
   );
 };
 
