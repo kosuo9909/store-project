@@ -12,7 +12,7 @@ const Shop = () => {
   const rows = useSelector((state: RootState) => state.cars.value);
   const dispatch = useDispatch();
   const intl = useIntl();
-  const minWidth = 150;
+  const minWidth = 140;
   const columns: GridColDef[] = [
     {
       field: 'make',
