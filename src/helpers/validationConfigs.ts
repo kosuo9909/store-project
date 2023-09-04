@@ -13,7 +13,7 @@ export const carValidationConfig: Record<string, ValidatorFuncSignature[]> = {
   year: [isRequired, mustBeNumber, isWithinRange(1886, 2024)],
   mileageColumn: [isRequired, mustBeNumber, mustBePositive],
   fuelColumn: [isRequired],
-  bhpColumn: [isRequired, mustBePositive],
+  bhpColumn: [isRequired, mustBePositive, mustBeNumber],
   city: [isRequired],
   country: [isRequired],
   description: [isRequired],
