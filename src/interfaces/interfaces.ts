@@ -1,8 +1,5 @@
-import React from 'react';
-
 export interface ICar {
   id: string;
-  today?: string;
   datePosted: string;
   make: string;
   model: string;
@@ -36,13 +33,4 @@ export interface IAddVehicle {
 
 export interface IUseAddOrEditProps {
   addOrEdit: 'add' | 'edit';
-}
-
-export interface IUseAddOrEditReturn {
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleClear: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  handleEdit: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  handleSubmit: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  validationErrors: ValidationErrors;
-  formData: Partial<ICar>;
 }
