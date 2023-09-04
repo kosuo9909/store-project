@@ -28,11 +28,12 @@ const User: React.FC = () => {
     validationConfig: userValidationConfig,
     onSubmit: handleSubmit,
     textFields: userTextFields,
+    context: 'user',
   });
 
   return (
     <main>
-      <h2>{intl.formatMessage({ id: 'user' })}</h2>
+      <h2>{intl.formatMessage({ id: 'common.addUser' })}</h2>
       <Box
         component="form"
         noValidate
@@ -53,7 +54,7 @@ const User: React.FC = () => {
             name={name}
             type="input"
             value={formData[name as keyof Partial<IUser>]}
-            label={intl.formatMessage({ id: name })}
+            label={intl.formatMessage({ id: 'user.' + name })}
             placeholder={label}
             onChange={handleChange}
           />
@@ -65,14 +66,14 @@ const User: React.FC = () => {
           variant="outlined"
           startIcon={<DeleteIcon />}
         >
-          {intl.formatMessage({ id: 'clear' })}
+          {intl.formatMessage({ id: 'button.clear' })}
         </Button>
         <Button
           variant="contained"
           onClick={handleFormAction}
           endIcon={<SendIcon />}
         >
-          {intl.formatMessage({ id: 'submit' })}
+          {intl.formatMessage({ id: 'button.submit' })}
         </Button>
       </Stack>
     </main>

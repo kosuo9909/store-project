@@ -8,12 +8,12 @@ export const formatTimeElapsed = (date: Date | string, intl: IntlShape) => {
   );
 
   if (timeElapsedInSeconds < 5) {
-    return intl.formatMessage({ id: 'addedNow' });
+    return intl.formatMessage({ id: 'timestamp.addedNow' });
   }
   if (timeElapsedInSeconds < 60) {
     return intl.formatMessage(
       {
-        id: 'addedSecondsAgo',
+        id: 'timestamp.addedSecondsAgo',
       },
       { seconds: timeElapsedInSeconds },
     );
@@ -21,7 +21,7 @@ export const formatTimeElapsed = (date: Date | string, intl: IntlShape) => {
   if (timeElapsedInSeconds < 3600) {
     return intl.formatMessage(
       {
-        id: 'addedMinutesAgo',
+        id: 'timestamp.addedMinutesAgo',
       },
       { minutes: Math.floor(timeElapsedInSeconds / 60) },
     );

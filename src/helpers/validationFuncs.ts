@@ -5,6 +5,7 @@ export type ValidatorFuncSignature = (
   value: string | number,
   key: string,
   intl: IntlShape,
+  context: string,
 ) => string | null;
 
 export const isRequired: ValidatorFuncSignature = (
@@ -12,11 +13,15 @@ export const isRequired: ValidatorFuncSignature = (
   value,
   key,
   intl,
+  context,
 ) => {
   if (value === '') {
-    const fieldName = intl.formatMessage({ id: key });
+    const fieldName = intl.formatMessage({ id: context + '.' + key });
     return intl.formatMessage(
-      { id: 'cannotBeEmpty', defaultMessage: '{fieldName} cannot be empty.' },
+      {
+        id: 'validation.error.isEmpty',
+        defaultMessage: '{fieldName} cannot be empty.',
+      },
       { fieldName: fieldName },
     );
   }
@@ -27,12 +32,16 @@ export const mustBeNumber: ValidatorFuncSignature = (
   value,
   key,
   intl,
+  context,
 ) => {
   if (isNaN(Number(value))) {
-    const fieldName = intl.formatMessage({ id: key });
+    const fieldName = intl.formatMessage({ id: context + '.' + key });
 
     return intl.formatMessage(
-      { id: 'mustBeNumber', defaultMessage: '{fieldName} must be a number.' },
+      {
+        id: 'validation.error.isNotNumber',
+        defaultMessage: '{fieldName} must be a number.',
+      },
       { fieldName: fieldName },
     );
   }
@@ -43,11 +52,15 @@ export const mustBePositive: ValidatorFuncSignature = (
   value,
   key,
   intl,
+  context,
 ) => {
   if (Number(value) < 0) {
-    const fieldName = intl.formatMessage({ id: key });
+    const fieldName = intl.formatMessage({ id: context + '.' + key });
     return intl.formatMessage(
-      { id: 'mustBePositive', defaultMessage: '{fieldName} must be positive.' },
+      {
+        id: 'validation.error.isNotPositive',
+        defaultMessage: '{fieldName} must be positive.',
+      },
       { fieldName: fieldName },
     );
   }
@@ -56,13 +69,13 @@ export const mustBePositive: ValidatorFuncSignature = (
 
 export const isWithinRange =
   (min: number, max: number): ValidatorFuncSignature =>
-  (itemDict, value, key, intl) => {
+  (itemDict, value, key, intl, context) => {
     const numValue = Number(value);
     if (numValue < min || numValue > max) {
-      const fieldName = intl.formatMessage({ id: key });
+      const fieldName = intl.formatMessage({ id: context + '.' + key });
       return intl.formatMessage(
         {
-          id: 'isWithinRange',
+          id: 'validation.error.isNotWithinRange',
           defaultMessage: '{fieldName} must be between {min} and {max}.',
         },
         { fieldName, min, max },

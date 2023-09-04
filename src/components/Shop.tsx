@@ -16,24 +16,33 @@ const Shop = () => {
   const columns: GridColDef[] = [
     {
       field: 'make',
-      headerName: intl.formatMessage({ id: 'make', defaultMessage: 'Make' }),
+      headerName: intl.formatMessage({
+        id: 'car.make',
+        defaultMessage: 'Make',
+      }),
       minWidth: minWidth,
     },
     {
       field: 'model',
-      headerName: intl.formatMessage({ id: 'model', defaultMessage: 'Model' }),
+      headerName: intl.formatMessage({
+        id: 'car.model',
+        defaultMessage: 'Model',
+      }),
       minWidth: minWidth,
     },
     {
       field: 'year',
-      headerName: intl.formatMessage({ id: 'year', defaultMessage: 'Year' }),
+      headerName: intl.formatMessage({
+        id: 'car.year',
+        defaultMessage: 'Year',
+      }),
       minWidth: minWidth,
       type: 'number',
     },
     {
       field: 'mileageColumn',
       headerName: intl.formatMessage({
-        id: 'mileageColumn',
+        id: 'car.mileageColumn',
         defaultMessage: 'Mileage',
       }),
       minWidth: minWidth,
@@ -42,7 +51,7 @@ const Shop = () => {
     {
       field: 'fuelColumn',
       headerName: intl.formatMessage({
-        id: 'fuelColumn',
+        id: 'car.fuelColumn',
         defaultMessage: 'Fuel',
       }),
       minWidth: minWidth,
@@ -50,7 +59,7 @@ const Shop = () => {
     {
       field: 'bhpColumn',
       headerName: intl.formatMessage({
-        id: 'bhpColumn',
+        id: 'car.bhpColumn',
         defaultMessage: 'Horsepower',
       }),
       minWidth: minWidth,
@@ -58,34 +67,40 @@ const Shop = () => {
     },
     {
       field: 'city',
-      headerName: intl.formatMessage({ id: 'city', defaultMessage: 'City' }),
+      headerName: intl.formatMessage({
+        id: 'car.city',
+        defaultMessage: 'City',
+      }),
       minWidth: minWidth,
     },
     {
       field: 'country',
       headerName: intl.formatMessage({
-        id: 'country',
+        id: 'car.country',
         defaultMessage: 'Country',
       }),
       minWidth: minWidth,
     },
     {
       field: 'price',
-      headerName: intl.formatMessage({ id: 'price', defaultMessage: 'Price' }),
+      headerName: intl.formatMessage({
+        id: 'car.price',
+        defaultMessage: 'Price',
+      }),
       minWidth: minWidth,
       type: 'number',
     },
     {
       field: 'description',
       headerName: intl.formatMessage({
-        id: 'description',
+        id: 'car.description',
         defaultMessage: 'Description',
       }),
       minWidth: minWidth,
     },
     {
       field: 'datePosted',
-      headerName: intl.formatMessage({ id: 'datePosted' }),
+      headerName: intl.formatMessage({ id: 'timestamp.datePosted' }),
       minWidth: 200,
       type: 'dateTime',
       valueGetter: (params) => {
@@ -112,7 +127,7 @@ const Shop = () => {
         return (
           <Link to={`/${id}`}>
             <Button onClick={() => handleViewCar(id)} size="small">
-              {intl.formatMessage({ id: 'viewlisting' })}
+              {intl.formatMessage({ id: 'button.viewListing' })}
             </Button>
           </Link>
         );

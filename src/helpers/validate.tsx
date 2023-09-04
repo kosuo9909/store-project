@@ -7,6 +7,7 @@ export const validateFields = (
   config: Record<string, ValidatorFuncSignature[]>,
   itemDict: Record<string, string>,
   intl: IntlShape,
+  context: string,
 ): ValidationErrors => {
   const errors: ValidationErrors = {};
 
@@ -15,7 +16,7 @@ export const validateFields = (
     const validationFuncsToBeChecked = config[key];
 
     for (const validationFunction of validationFuncsToBeChecked) {
-      const error = validationFunction(itemDict, value, key, intl);
+      const error = validationFunction(itemDict, value, key, intl, context);
       if (error) {
         errors[key] = error;
         break;

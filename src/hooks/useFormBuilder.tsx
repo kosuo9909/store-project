@@ -20,6 +20,7 @@ interface IFormBuilderProps<T> {
   isEditing?: boolean;
   onEdit?: (key: keyof T, value: string | number) => void;
   editedData?: T;
+  context: string;
 }
 
 const useFormBuilder = <T extends Record<string, string | number>>({
@@ -29,6 +30,7 @@ const useFormBuilder = <T extends Record<string, string | number>>({
   onSubmit,
   isEditing,
   editedData,
+  context,
 }: IFormBuilderProps<T>): IFormBuilderReturn<T> => {
   const navigate = useNavigate();
 
@@ -57,6 +59,7 @@ const useFormBuilder = <T extends Record<string, string | number>>({
         validationConfig,
         textFields,
         intl,
+        context,
       );
 
       if (Object.keys(errors).length > 0) {
@@ -75,6 +78,7 @@ const useFormBuilder = <T extends Record<string, string | number>>({
       validationConfig,
       intl,
       textFields,
+      context,
     ],
   );
 

@@ -22,6 +22,7 @@ describe('useFormBuilder', () => {
           validationConfig: {},
           textFields: {},
           onSubmit: mockOnSubmit,
+          context: '',
         }),
       { wrapper },
     );
@@ -49,6 +50,7 @@ describe('useFormBuilder', () => {
           validationConfig: {},
           textFields: {},
           onSubmit: mockOnSubmit,
+          context: '',
         }),
       { wrapper },
     );

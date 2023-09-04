@@ -53,14 +53,15 @@ const AddVehicle: React.FC<IAddVehicle> = ({
     isEditing: addOrEdit === 'edit' ? true : false,
     editedData: selectedCar,
     textFields: carTextFields,
+    context: 'car',
   });
 
   return (
     <main>
       {addOrEdit === 'add' ? (
-        <h2>{intl.formatMessage({ id: 'add' })}</h2>
+        <h2>{intl.formatMessage({ id: 'common.addVehicle' })}</h2>
       ) : (
-        <h2>{intl.formatMessage({ id: 'edit' })}</h2>
+        <h2>{intl.formatMessage({ id: 'common.editVehicle' })}</h2>
       )}
       <Box
         component="form"
@@ -81,7 +82,7 @@ const AddVehicle: React.FC<IAddVehicle> = ({
             id={name}
             name={name}
             type="input"
-            label={intl.formatMessage({ id: name })}
+            label={intl.formatMessage({ id: 'car.' + name })}
             value={formData[name as keyof Partial<ICar>]}
             placeholder={label}
             onChange={handleChange}
@@ -96,14 +97,14 @@ const AddVehicle: React.FC<IAddVehicle> = ({
             variant="outlined"
             startIcon={<DeleteIcon />}
           >
-            {intl.formatMessage({ id: 'clear' })}
+            {intl.formatMessage({ id: 'button.clear' })}
           </Button>
           <Button
             variant="contained"
             onClick={handleFormAction}
             endIcon={<SendIcon />}
           >
-            {intl.formatMessage({ id: 'submit' })}
+            {intl.formatMessage({ id: 'button.submit' })}
           </Button>
         </Stack>
       )}
@@ -114,14 +115,14 @@ const AddVehicle: React.FC<IAddVehicle> = ({
             variant="outlined"
             startIcon={<DeleteIcon />}
           >
-            {intl.formatMessage({ id: 'clear' })}
+            {intl.formatMessage({ id: 'button.clear' })}
           </Button>
           <Button
             variant="contained"
             onClick={handleFormAction}
             endIcon={<SendIcon />}
           >
-            {intl.formatMessage({ id: 'submit' })}
+            {intl.formatMessage({ id: 'button.submit' })}
           </Button>
         </Stack>
       )}
