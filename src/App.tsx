@@ -24,7 +24,12 @@ const App = () => {
     }
   };
   return (
-    <IntlProvider messages={messages} locale={locale} defaultLocale="bg-BG">
+    <IntlProvider
+      messages={messages}
+      key={locale}
+      locale={locale}
+      defaultLocale="bg-BG"
+    >
       <Navbar handleLocale={handleLocale} locale={locale} />
       <Outlet />
     </IntlProvider>
