@@ -13,7 +13,7 @@
   "make": "Make",
   "model": "Model",
   "year": "Year",
-  "yearOfProduction": "Year of production",
+  "yearOfProduction": "Year of production: {year}",
   "mileage": "Mileage: {mileageValue}",
   "mileageColumn": "Mileage",
   "fuel": "Fuel: {fuelType}",
