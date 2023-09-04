@@ -5,11 +5,12 @@ import { RootState } from './store/store';
 import { changeLocale } from './reducers/localeReducer';
 import Navbar from './components/Navbar';
 import { Outlet } from 'react-router';
+import defaultLocaleJSON from './lang/en-US.json';
 
 const App = () => {
   const locale = useSelector((state: RootState) => state.locale.locale);
   const dispatch = useDispatch();
-  const [messages, setMessages] = useState();
+  const [messages, setMessages] = useState(defaultLocaleJSON);
   const delay = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms));
   useEffect(() => {

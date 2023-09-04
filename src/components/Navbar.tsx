@@ -25,7 +25,7 @@ const Navbar = ({ handleLocale, locale }: INavbar) => {
             <Typography
               variant="h6"
               noWrap
-              component="a"
+              component="p"
               sx={{
                 mr: 3,
                 display: { xs: 'none', md: 'flex' },
