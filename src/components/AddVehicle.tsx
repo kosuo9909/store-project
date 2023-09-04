@@ -7,7 +7,7 @@ import Stack from '@mui/material/Stack';
 import { IAddVehicle, ICar } from '../interfaces/interfaces';
 import './AddVehicle.scss';
 import { carTextFields, initialCarFormData } from '../helpers/carFields';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import useFormBuilder from '../hooks/useFormBuilder';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,15 +21,21 @@ const AddVehicle: React.FC<IAddVehicle> = ({
   const intl = useIntl();
   const dispatch = useDispatch();
   const selectedCar = useSelector((state: RootState) => state.cars.selectedCar);
-  const handleSubmit = (formData: Partial<ICar>) => {
-    dispatch(addCar(formData as ICar));
-  };
-  const handleEdit = (formData: Partial<ICar>, carId: string) => {
-    const updatedCar = {
-      ...formData,
-    };
-    dispatch(editCar({ id: carId, updatedCar }));
-  };
+  const handleSubmit = useCallback(
+    (formData: Partial<ICar>) => {
+      dispatch(addCar(formData as ICar));
+    },
+    [dispatch],
+  );
+  const handleEdit = useCallback(
+    (formData: Partial<ICar>, carId: string) => {
+      const updatedCar = {
+        ...formData,
+      };
+      dispatch(editCar({ id: carId, updatedCar }));
+    },
+    [dispatch],
+  );
 
   const {
     handleFormAction,
@@ -49,7 +55,6 @@ const AddVehicle: React.FC<IAddVehicle> = ({
     textFields: carTextFields,
   });
 
-  // For 'edit' mode
   return (
     <main>
       {addOrEdit === 'add' ? (
