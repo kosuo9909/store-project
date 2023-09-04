@@ -10,9 +10,26 @@ describe('useFormBuilder', () => {
       <MemoryRouter>{children}</MemoryRouter>
     </IntlProvider>
   );
-  it('should handle changes correctly', () => {
-    const mockOnSubmit = jest.fn();
+  const mockOnSubmit = jest.fn();
 
+  it('shoult have the correct initial state (empty)', () => {
+    const initialData = { name: '', age: '' };
+
+    const { result } = renderHook(
+      () =>
+        useFormBuilder({
+          initialData: initialData,
+          validationConfig: {},
+          textFields: {},
+          onSubmit: mockOnSubmit,
+          context: '',
+        }),
+      { wrapper },
+    );
+
+    expect(result.current.formData).toEqual(initialData);
+  });
+  it('should handle changes correctly', () => {
     const initialData = { username: 'peter' };
 
     const { result } = renderHook(
@@ -39,8 +56,6 @@ describe('useFormBuilder', () => {
     expect(result.current.formData).toEqual({ username: 'john' });
   });
   it('should clear the form', () => {
-    const mockOnSubmit = jest.fn();
-
     const initialData = {};
 
     const { result } = renderHook(
@@ -69,5 +84,37 @@ describe('useFormBuilder', () => {
     });
 
     expect(result.current.formData).toEqual({});
+  });
+
+  it('should update formData when isEditing and editedData changes', () => {
+    const initialProps = {
+      initialData: {},
+      validationConfig: {},
+      textFields: {},
+      onSubmit: mockOnSubmit,
+      context: '',
+      isEditing: false,
+      editedData: {},
+    };
+
+    const { result, rerender } = renderHook((props) => useFormBuilder(props), {
+      initialProps,
+      wrapper,
+    });
+
+    rerender({
+      initialData: {},
+      validationConfig: {},
+      textFields: {},
+      onSubmit: mockOnSubmit,
+      context: '',
+      isEditing: true,
+      editedData: { name: 'John', email: 'john@gmail.com' },
+    });
+
+    expect(result.current.formData).toEqual({
+      name: 'John',
+      email: 'john@gmail.com',
+    });
   });
 });
