@@ -10,12 +10,27 @@ const App = () => {
   const locale = useSelector((state: RootState) => state.locale.locale);
   const dispatch = useDispatch();
   const [messages, setMessages] = useState();
-
+  const delay = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
   useEffect(() => {
-    import(`../src/lang/${locale}.json`).then((langJSON) => {
-      setMessages(langJSON);
-    });
+    let currentRetryCount = 0;
+
+    const loadLangData = async () => {
+      try {
+        const langJSON = await import(`../src/lang/${locale}.json`);
+        setMessages(langJSON);
+      } catch (error) {
+        if (currentRetryCount < 3) {
+          await delay(200);
+          currentRetryCount++;
+          loadLangData();
+        }
+      }
+    };
+
+    loadLangData();
   }, [locale]);
+
   const handleLocale = () => {
     if (locale === 'en-US') {
       dispatch(changeLocale('bg-BG'));
