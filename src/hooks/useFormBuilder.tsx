@@ -28,7 +28,6 @@ const useFormBuilder = <T extends Record<string, string | number>>({
   textFields,
   onSubmit,
   isEditing,
-  onEdit,
   editedData,
 }: IFormBuilderProps<T>): IFormBuilderReturn<T> => {
   const navigate = useNavigate();
