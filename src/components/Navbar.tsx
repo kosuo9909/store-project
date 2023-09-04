@@ -36,14 +36,17 @@ const Navbar = ({ handleLocale, locale }: INavbar) => {
                 textDecoration: 'none',
               }}
             >
-              {intl.formatMessage({ id: 'home' })}
+              {intl.formatMessage({ id: 'home', defaultMessage: 'Home' })}
             </Typography>
           </Link>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Link to="add">
               <Button sx={{ my: 2, color: 'white', display: 'block' }}>
-                {intl.formatMessage({ id: 'addNavButton' })}
+                {intl.formatMessage({
+                  id: 'addNavButton',
+                  defaultMessage: 'Add Vehicle',
+                })}
               </Button>
             </Link>
           </Box>

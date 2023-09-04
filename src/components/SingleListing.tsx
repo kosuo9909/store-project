@@ -54,21 +54,37 @@ export default function SingleListing({ car, button }: SingleListingProps) {
           </Typography>
           <Typography variant="body2" sx={typographySxProps}>
             {intl.formatMessage(
-              { id: 'mileage' },
+              { id: 'mileage', defaultMessage: 'Mileage - {mileageValue}' },
               { mileageValue: car.mileage },
             )}
           </Typography>
           <Typography variant="body2" sx={typographySxProps}>
-            {intl.formatMessage({ id: 'yearOfProduction' }, { year: car.year })}
+            {intl.formatMessage(
+              {
+                id: 'yearOfProduction',
+                defaultMessage: 'Year of production - {year}',
+              },
+              { year: car.year },
+            )}
           </Typography>
           <Typography variant="body2" sx={typographySxProps}>
-            {intl.formatMessage({ id: 'fuel' }, { fuelType: car.fuel })}
+            {intl.formatMessage(
+              { id: 'fuel', defaultMessage: 'Fuel type - {fuelType}' },
+              { fuelType: car.fuel },
+            )}
           </Typography>
           <Typography variant="body2" sx={typographySxProps}>
-            {intl.formatMessage({ id: 'bhp' }, { bhpValue: car.bhp })}
+            {intl.formatMessage(
+              { id: 'bhp', defaultMessage: 'Horsepower - {bhpValue}' },
+              { bhpValue: car.bhp },
+            )}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-            {intl.formatMessage({ id: 'description' })} <br></br>
+            {intl.formatMessage({
+              id: 'description',
+              defaultMessage: 'Description',
+            })}{' '}
+            <br></br>
             {car.description}
           </Typography>
           <Typography variant="body2" sx={typographySxProps}>
@@ -79,7 +95,10 @@ export default function SingleListing({ car, button }: SingleListingProps) {
           {button === 'view' && (
             <Link to={`/${car.id}`}>
               <Button onClick={() => handleViewCar(car.id)} size="small">
-                {intl.formatMessage({ id: 'viewlisting' })}
+                {intl.formatMessage({
+                  id: 'viewlisting',
+                  defaultMessage: 'View Listing',
+                })}
               </Button>
             </Link>
           )}
@@ -87,11 +106,11 @@ export default function SingleListing({ car, button }: SingleListingProps) {
             <>
               <Link to="/edit">
                 <Button onClick={() => handleViewCar(car.id)} size="small">
-                  {intl.formatMessage({ id: 'edit' })}
+                  {intl.formatMessage({ id: 'edit', defaultMessage: 'Edit' })}
                 </Button>
               </Link>
               <Button onClick={(e) => handleRemove(car.id, e)} size="small">
-                {intl.formatMessage({ id: 'remove' })}
+                {intl.formatMessage({ id: 'remove', defaultMessage: 'Remove' })}
               </Button>
             </>
           )}
