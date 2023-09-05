@@ -11,20 +11,20 @@ import React, { useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import useFormBuilder from '../hooks/useFormBuilder';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCar, editCar } from '../reducers/carsReducer';
-import { RootState } from '../store/store';
+import { editCar, postCars } from '../reducers/carsReducer';
+import { AppDispatch, RootState } from '../store/store';
 import { carValidationConfig } from '../helpers/validationConfigs';
 
 const AddVehicle: React.FC<IAddVehicle> = ({
   addOrEdit = 'add',
 }: IAddVehicle) => {
   const intl = useIntl();
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const selectedCar = useSelector((state: RootState) => state.cars.selectedCar);
   const handleSubmit = useCallback(
-    (formData: Partial<ICar>) => {
+    async (formData: Partial<ICar>) => {
       if (addOrEdit === 'add') {
-        dispatch(addCar(formData as ICar));
+        await dispatch(postCars(formData as ICar));
       } else {
         if (selectedCar) {
           const updatedCar = { ...formData };
@@ -34,17 +34,6 @@ const AddVehicle: React.FC<IAddVehicle> = ({
     },
     [dispatch, addOrEdit, selectedCar],
   );
-
-  // const handleSubmit = (formData: Partial<ICar>) => {
-  //   if (addOrEdit === 'add') {
-  //     dispatch(addCar(formData as ICar));
-  //   } else {
-  //     if (selectedCar) {
-  //       const updatedCar = { ...formData };
-  //       dispatch(editCar({ id: selectedCar?.id, updatedCar }));
-  //     }
-  //   }
-  // };
 
   const {
     handleFormAction,

@@ -1,6 +1,7 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { ICar } from '../interfaces/interfaces';
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 interface CarState {
   value: ICar[];
   selectedCar?: ICar;
@@ -44,7 +45,32 @@ export const carSlice = createSlice({
       }
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(postCars.fulfilled, (state, action) => {
+      const myID = uuidv4();
+      const carWithDateAndID = {
+        ...action.payload,
+        datePosted: new Date().toISOString(),
+        id: myID,
+      };
+      state.value.push(carWithDateAndID);
+    });
+  },
 });
+
+export const fetchCars = createAsyncThunk('cars/fetchCars', async () => {
+  const response = await axios.get('/api/cars');
+
+  return response.data;
+});
+export const postCars = createAsyncThunk(
+  'cars/postCars',
+  async (initialPost: Partial<ICar>) => {
+    const response = await axios.post('/api/cars', initialPost);
+
+    return response.data;
+  },
+);
 
 export const { addCar, removeCar, editCar, selectCar } = carSlice.actions;
 export default carSlice.reducer;

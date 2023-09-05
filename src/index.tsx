@@ -11,6 +11,10 @@ import { createTheme } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
 import App from './App';
 import User from './components/User';
+import { mirageServer } from './server/server';
+import axios from 'axios';
+
+mirageServer();
 
 const theme = createTheme({
   palette: {
@@ -31,6 +35,11 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Shop />,
+        loader: async () => {
+          const response = await axios.get('/api/cars');
+
+          return response.data;
+        },
       },
       { path: 'add', element: <AddVehicle addOrEdit="add" /> },
       { path: 'edit', element: <AddVehicle addOrEdit="edit" /> },
@@ -39,9 +48,6 @@ const router = createBrowserRouter([
     ],
   },
 ]);
-
-// const locale = JSON.parse(localStorage.getItem('reduxState') || '').locale
-//   .locale;
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,

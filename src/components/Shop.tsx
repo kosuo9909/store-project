@@ -7,12 +7,22 @@ import Button from '@mui/material/Button';
 import { selectCar } from '../reducers/carsReducer';
 import { useIntl } from 'react-intl';
 import { formatTimeElapsed } from '../helpers/formatTimeElapsed';
+import axios from 'axios';
 
 const Shop = () => {
   const rows = useSelector((state: RootState) => state.cars.value);
   const dispatch = useDispatch();
   const intl = useIntl();
   const minWidth = 140;
+
+  const getCars = async () => {
+    const response = await axios.get('/api/cars');
+
+    return response.data;
+  };
+
+  console.log(getCars());
+
   const columns: GridColDef[] = [
     {
       field: 'make',
@@ -21,6 +31,7 @@ const Shop = () => {
         defaultMessage: 'Make',
       }),
       minWidth: minWidth,
+      valueGetter: (params) => params.row.car.make,
     },
     {
       field: 'model',
@@ -29,6 +40,7 @@ const Shop = () => {
         defaultMessage: 'Model',
       }),
       minWidth: minWidth,
+      valueGetter: (params) => params.row.car.model,
     },
     {
       field: 'year',
@@ -37,6 +49,8 @@ const Shop = () => {
         defaultMessage: 'Year',
       }),
       minWidth: minWidth,
+      valueGetter: (params) => params.row.car.year,
+
       type: 'number',
     },
     {
@@ -47,6 +61,7 @@ const Shop = () => {
       }),
       minWidth: minWidth,
       type: 'number',
+      valueGetter: (params) => params.row.car.mileageColumn,
     },
     {
       field: 'fuelColumn',
@@ -55,6 +70,7 @@ const Shop = () => {
         defaultMessage: 'Fuel',
       }),
       minWidth: minWidth,
+      valueGetter: (params) => params.row.car.fuelColumn,
     },
     {
       field: 'bhpColumn',
@@ -64,6 +80,7 @@ const Shop = () => {
       }),
       minWidth: minWidth,
       type: 'number',
+      valueGetter: (params) => params.row.car.bhpColumn,
     },
     {
       field: 'city',
@@ -72,6 +89,7 @@ const Shop = () => {
         defaultMessage: 'City',
       }),
       minWidth: minWidth,
+      valueGetter: (params) => params.row.car.city,
     },
     {
       field: 'country',
@@ -80,6 +98,7 @@ const Shop = () => {
         defaultMessage: 'Country',
       }),
       minWidth: minWidth,
+      valueGetter: (params) => params.row.car.country,
     },
     {
       field: 'price',
@@ -89,6 +108,7 @@ const Shop = () => {
       }),
       minWidth: minWidth,
       type: 'number',
+      valueGetter: (params) => params.row.car.price,
     },
     {
       field: 'description',
@@ -97,6 +117,7 @@ const Shop = () => {
         defaultMessage: 'Description',
       }),
       minWidth: minWidth,
+      valueGetter: (params) => params.row.car.description,
     },
     {
       field: 'datePosted',

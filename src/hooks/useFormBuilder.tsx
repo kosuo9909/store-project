@@ -36,7 +36,7 @@ const useFormBuilder = <T extends Record<string, string | number>>({
   }, [isEditing, editedData, initialData]);
 
   const handleFormAction = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
+    async (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
 
       const errors = validateFields(
@@ -50,7 +50,7 @@ const useFormBuilder = <T extends Record<string, string | number>>({
       if (Object.keys(errors).length > 0) {
         setValidationErrors(errors);
       } else {
-        onSubmit(formData);
+        await onSubmit(formData);
         navigate('/');
         setFormData(initialData);
       }
