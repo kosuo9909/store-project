@@ -8,6 +8,20 @@ export type ValidatorFuncSignature = (
   context: string,
 ) => string | null;
 
+// const getFormatMessageConfig = (fieldName, type) => {
+//     switch (type) {
+//       case isRequired:
+//         {
+//           id: 'validation.error.isEmpty',
+//           defaultMessage: '{fieldName} cannot be empty.',
+//         },
+//         { fieldName: fieldName },
+//         break;
+//       default:
+//         break;
+//     }
+// }
+
 export const isRequired: ValidatorFuncSignature = (
   itemDict,
   value,
@@ -17,6 +31,8 @@ export const isRequired: ValidatorFuncSignature = (
 ) => {
   if (value === '') {
     const fieldName = intl.formatMessage({ id: context + '.' + key });
+
+    // let formatMessageConfig = getFormatMessageConfig(fieldName, 'isRequired');
     return intl.formatMessage(
       {
         id: 'validation.error.isEmpty',
@@ -27,6 +43,7 @@ export const isRequired: ValidatorFuncSignature = (
   }
   return null;
 };
+
 export const mustBeNumber: ValidatorFuncSignature = (
   itemDict,
   value,
@@ -47,6 +64,7 @@ export const mustBeNumber: ValidatorFuncSignature = (
   }
   return null;
 };
+
 export const mustBePositive: ValidatorFuncSignature = (
   itemDict,
   value,

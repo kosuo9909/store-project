@@ -1,30 +1,44 @@
-import { IntlProvider } from 'react-intl';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
 import { RootState } from './store/store';
 import { changeLocale } from './reducers/localeReducer';
 import Navbar from './components/Navbar';
+import { IntlProvider } from 'react-intl';
 import { Outlet } from 'react-router';
-import defaultLocaleJSON from './lang/en-US.json';
 
 const App = () => {
   const locale = useSelector((state: RootState) => state.locale.locale);
   const dispatch = useDispatch();
-  const [messages, setMessages] = useState(defaultLocaleJSON);
   const delay = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms));
+  const [messages, setMessages] = useState({});
+  const [isLoadLangSuccessful, setIsLoadLangSuccessful] = useState(false);
+  const localeChangeCall = useRef(0);
+
   useEffect(() => {
     let currentRetryCount = 0;
+
+    const currentLocaleChangeCall = localeChangeCall.current;
+
+    localeChangeCall.current += 1;
 
     const loadLangData = async () => {
       try {
         const langJSON = await import(`../src/lang/${locale}.json`);
-        setMessages(langJSON);
+
+        if (currentLocaleChangeCall === localeChangeCall.current - 1) {
+          setMessages(langJSON);
+          setIsLoadLangSuccessful(true);
+        }
       } catch (error) {
-        if (currentRetryCount < 3) {
+        if (
+          currentRetryCount < 3 &&
+          currentLocaleChangeCall === localeChangeCall.current - 1
+        ) {
           await delay(200);
           currentRetryCount++;
           loadLangData();
+          setIsLoadLangSuccessful(false);
         }
       }
     };
@@ -33,18 +47,23 @@ const App = () => {
   }, [locale]);
 
   const handleLocale = () => {
-    if (locale === 'en-US') {
+    if (locale === 'en-US' && isLoadLangSuccessful) {
       dispatch(changeLocale('bg-BG'));
-    } else {
+    } else if (locale === 'bg-BG' && isLoadLangSuccessful) {
       dispatch(changeLocale('en-US'));
     }
   };
+
+  if (!isLoadLangSuccessful) {
+    return <div>Loading translations...</div>;
+  }
+
   return (
     <IntlProvider
       messages={messages}
       key={locale}
       locale={locale}
-      defaultLocale="bg-BG"
+      defaultLocale="en-US"
     >
       <Navbar handleLocale={handleLocale} locale={locale} />
       <Outlet />
