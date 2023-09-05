@@ -23,19 +23,28 @@ const AddVehicle: React.FC<IAddVehicle> = ({
   const selectedCar = useSelector((state: RootState) => state.cars.selectedCar);
   const handleSubmit = useCallback(
     (formData: Partial<ICar>) => {
-      dispatch(addCar(formData as ICar));
+      if (addOrEdit === 'add') {
+        dispatch(addCar(formData as ICar));
+      } else {
+        if (selectedCar) {
+          const updatedCar = { ...formData };
+          dispatch(editCar({ id: selectedCar?.id, updatedCar }));
+        }
+      }
     },
-    [dispatch],
+    [dispatch, addOrEdit, selectedCar],
   );
-  const handleEdit = useCallback(
-    (formData: Partial<ICar>, carId: string) => {
-      const updatedCar = {
-        ...formData,
-      };
-      dispatch(editCar({ id: carId, updatedCar }));
-    },
-    [dispatch],
-  );
+
+  // const handleSubmit = (formData: Partial<ICar>) => {
+  //   if (addOrEdit === 'add') {
+  //     dispatch(addCar(formData as ICar));
+  //   } else {
+  //     if (selectedCar) {
+  //       const updatedCar = { ...formData };
+  //       dispatch(editCar({ id: selectedCar?.id, updatedCar }));
+  //     }
+  //   }
+  // };
 
   const {
     handleFormAction,
@@ -46,10 +55,7 @@ const AddVehicle: React.FC<IAddVehicle> = ({
   } = useFormBuilder<Partial<ICar>>({
     initialData: initialCarFormData,
     validationConfig: carValidationConfig,
-    onSubmit:
-      addOrEdit === 'add'
-        ? handleSubmit
-        : (formData) => handleEdit(formData, selectedCar?.id ?? ''),
+    onSubmit: handleSubmit,
     isEditing: addOrEdit === 'edit' ? true : false,
     editedData: selectedCar,
     textFields: carTextFields,

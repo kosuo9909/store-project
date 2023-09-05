@@ -7,6 +7,6 @@
       "/^border/": ["px"],
       "/^padding|^gap/": ["px"]
     },
-    "unit-allowed-list": ["%", "deg", "px", "rem", "ms"]
+    "unit-allowed-list": ["%", "deg", "rem", "ms"]
   }
 }

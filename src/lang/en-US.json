@@ -11,7 +11,7 @@
   "button.submit": "Submit",
   "button.remove": "Remove",
   "button.viewListing": "View listing",
-  "timestamp.addedJustNow": "Added just now.",
+  "timestamp.addedNow": "Added just now.",
   "timestamp.addedSecondsAgo": "Added {seconds, plural, one {# second} other {# seconds}} ago.",
   "timestamp.addedMinutesAgo": "Added {minutes, plural, one {# minute} other {# minutes}} ago.",
   "timestamp.datePosted": "Date posted",
