@@ -11,10 +11,10 @@ import { createTheme } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
 import App from './App';
 import User from './components/User';
-import { mirageServer } from './server/server';
+import { setupMirageServer } from './server/server';
 import axios from 'axios';
 
-mirageServer();
+setupMirageServer();
 
 const theme = createTheme({
   palette: {

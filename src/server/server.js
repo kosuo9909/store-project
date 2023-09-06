@@ -1,18 +1,20 @@
-import { Model, createServer } from 'miragejs';
+import { createServer } from 'miragejs';
 
-export const mirageServer = () => {
+export const setupMirageServer = () => {
   createServer({
-    models: {
-      car: Model,
-    },
     routes() {
-      this.get('/api/cars', (_schema) => {
-        return _schema.cars.all();
-      });
-      this.post('/api/cars', (schema, request) => {
-        const car = JSON.parse(request.requestBody);
+      this.get('/api/cars', () => {
+        const storedCars = localStorage.getItem('cars');
 
-        return schema.cars.create(car);
+        return storedCars ? JSON.parse(storedCars) : [];
+      });
+
+      this.post('/api/cars', (schema, request) => {
+        const storedCars = JSON.parse(localStorage.getItem('cars') || '[]');
+        storedCars.push(request.requestBody);
+        localStorage.setItem('cars', storedCars);
+
+        return '200';
       });
     },
   });

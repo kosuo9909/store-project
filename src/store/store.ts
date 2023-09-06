@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import carReducer from '../reducers/carsReducer';
-import localeSlice from '../reducers/localeReducer';
+import carReducer from '../redux/reducers/carsReducer';
+import localeSlice from '../redux/reducers/localeReducer';
 
 const storedState = localStorage.getItem('reduxState');
 

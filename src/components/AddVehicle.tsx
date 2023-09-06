@@ -11,7 +11,7 @@ import React, { useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import useFormBuilder from '../hooks/useFormBuilder';
 import { useDispatch, useSelector } from 'react-redux';
-import { editCar, postCars } from '../reducers/carsReducer';
+import { editCar, postCars } from '../redux/reducers/carsReducer';
 import { AppDispatch, RootState } from '../store/store';
 import { carValidationConfig } from '../helpers/validationConfigs';
 

@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import { ICar } from '../interfaces/interfaces';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { removeCar, selectCar } from '../reducers/carsReducer';
+import { removeCar, selectCar } from '../redux/reducers/carsReducer';
 import React from 'react';
 import { FormattedDate, useIntl } from 'react-intl';
 

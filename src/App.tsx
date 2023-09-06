@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from './store/store';
-import { changeLocale } from './reducers/localeReducer';
+import { changeLocale } from './redux/reducers/localeReducer';
 import Navbar from './components/Navbar';
 import { IntlProvider } from 'react-intl';
 import { Outlet } from 'react-router';

@@ -1,5 +1,5 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { ICar } from '../interfaces/interfaces';
+import { ICar } from '../../interfaces/interfaces';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 interface CarState {
@@ -47,13 +47,7 @@ export const carSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(postCars.fulfilled, (state, action) => {
-      const myID = uuidv4();
-      const carWithDateAndID = {
-        ...action.payload,
-        datePosted: new Date().toISOString(),
-        id: myID,
-      };
-      state.value.push(carWithDateAndID);
+      console.log('builder');
     });
   },
 });
@@ -63,10 +57,28 @@ export const fetchCars = createAsyncThunk('cars/fetchCars', async () => {
 
   return response.data;
 });
+
+export const editCars = createAsyncThunk(
+  'cars/editCars/',
+  async (carID: Partial<ICar>) => {
+    const response = await axios.put(`/api/cars/${carID}`);
+
+    return response.data;
+  },
+);
+export const removeCarAPI = createAsyncThunk(
+  'cars/editCars/',
+  async (carID: Partial<ICar>) => {
+    const response = await axios.delete(`/api/cars/${carID}`);
+
+    return response.data;
+  },
+);
+
 export const postCars = createAsyncThunk(
   'cars/postCars',
-  async (initialPost: Partial<ICar>) => {
-    const response = await axios.post('/api/cars', initialPost);
+  async (carObj: Partial<ICar>) => {
+    const response = await axios.post('/api/cars', carObj);
 
     return response.data;
   },

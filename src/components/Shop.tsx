@@ -4,13 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
-import { selectCar } from '../reducers/carsReducer';
+import { selectCar } from '../redux/reducers/carsReducer';
 import { useIntl } from 'react-intl';
 import { formatTimeElapsed } from '../helpers/formatTimeElapsed';
 import axios from 'axios';
 
 const Shop = () => {
-  const rows = useSelector((state: RootState) => state.cars.value);
+  const carsFromRedux = useSelector((state: RootState) => state.cars.value);
+  const rows = carsFromRedux.length > 0 ? carsFromRedux : [];
   const dispatch = useDispatch();
   const intl = useIntl();
   const minWidth = 140;
@@ -31,7 +32,8 @@ const Shop = () => {
         defaultMessage: 'Make',
       }),
       minWidth: minWidth,
-      valueGetter: (params) => params.row.car.make,
+      valueGetter: (params) =>
+        params.row.car?.make ? params.row.car.make : '',
     },
     {
       field: 'model',
@@ -40,7 +42,8 @@ const Shop = () => {
         defaultMessage: 'Model',
       }),
       minWidth: minWidth,
-      valueGetter: (params) => params.row.car.model,
+      valueGetter: (params) =>
+        params.row.car?.model ? params.row.car.model : '',
     },
     {
       field: 'year',
@@ -49,7 +52,8 @@ const Shop = () => {
         defaultMessage: 'Year',
       }),
       minWidth: minWidth,
-      valueGetter: (params) => params.row.car.year,
+      valueGetter: (params) =>
+        params.row.car?.year ? params.row.car.year : '',
 
       type: 'number',
     },
@@ -61,7 +65,8 @@ const Shop = () => {
       }),
       minWidth: minWidth,
       type: 'number',
-      valueGetter: (params) => params.row.car.mileageColumn,
+      valueGetter: (params) =>
+        params.row.car?.mileageColumn ? params.row.car.mileageColumn : '',
     },
     {
       field: 'fuelColumn',
@@ -70,7 +75,8 @@ const Shop = () => {
         defaultMessage: 'Fuel',
       }),
       minWidth: minWidth,
-      valueGetter: (params) => params.row.car.fuelColumn,
+      valueGetter: (params) =>
+        params.row.car?.fuelColumn ? params.row.car.fuelColumn : '',
     },
     {
       field: 'bhpColumn',
@@ -80,7 +86,8 @@ const Shop = () => {
       }),
       minWidth: minWidth,
       type: 'number',
-      valueGetter: (params) => params.row.car.bhpColumn,
+      valueGetter: (params) =>
+        params.row.car?.bhpColumn ? params.row.car.bhpColumn : '',
     },
     {
       field: 'city',
@@ -89,7 +96,8 @@ const Shop = () => {
         defaultMessage: 'City',
       }),
       minWidth: minWidth,
-      valueGetter: (params) => params.row.car.city,
+      valueGetter: (params) =>
+        params.row.car?.city ? params.row.car.city : '',
     },
     {
       field: 'country',
@@ -98,7 +106,8 @@ const Shop = () => {
         defaultMessage: 'Country',
       }),
       minWidth: minWidth,
-      valueGetter: (params) => params.row.car.country,
+      valueGetter: (params) =>
+        params.row.car?.country ? params.row.car.country : '',
     },
     {
       field: 'price',
@@ -108,7 +117,8 @@ const Shop = () => {
       }),
       minWidth: minWidth,
       type: 'number',
-      valueGetter: (params) => params.row.car.price,
+      valueGetter: (params) =>
+        params.row.car?.price ? params.row.car.price : '',
     },
     {
       field: 'description',
@@ -117,7 +127,8 @@ const Shop = () => {
         defaultMessage: 'Description',
       }),
       minWidth: minWidth,
-      valueGetter: (params) => params.row.car.description,
+      valueGetter: (params) =>
+        params.row.car?.description ? params.row.car.description : '',
     },
     {
       field: 'datePosted',
