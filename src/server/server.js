@@ -1,4 +1,5 @@
 import { createServer } from 'miragejs';
+import { v4 } from 'uuid';
 
 export const setupMirageServer = () => {
   createServer({
@@ -10,10 +11,16 @@ export const setupMirageServer = () => {
       });
 
       this.post('/api/cars', (schema, request) => {
+        const myID = v4();
+        const newCar = JSON.parse(request.requestBody);
+        const carWithDateAndID = {
+          ...newCar,
+          datePosted: new Date().toISOString(),
+          id: myID,
+        };
         const storedCars = JSON.parse(localStorage.getItem('cars') || '[]');
-        storedCars.push(request.requestBody);
-        localStorage.setItem('cars', storedCars);
-
+        storedCars.push(carWithDateAndID);
+        localStorage.setItem('cars', JSON.stringify(storedCars));
         return '200';
       });
     },
