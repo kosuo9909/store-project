@@ -1,28 +1,23 @@
 import Box from '@mui/material/Box';
 import { DataGrid, GridCellParams, GridColDef } from '@mui/x-data-grid';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store/store';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useLoaderData } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { selectCar } from '../redux/reducers/carsReducer';
 import { useIntl } from 'react-intl';
 import { formatTimeElapsed } from '../helpers/formatTimeElapsed';
-import axios from 'axios';
+import { ICar } from '../interfaces/interfaces';
 
 const Shop = () => {
-  const carsFromRedux = useSelector((state: RootState) => state.cars.value);
-  const rows = carsFromRedux.length > 0 ? carsFromRedux : [];
   const dispatch = useDispatch();
   const intl = useIntl();
   const minWidth = 140;
 
-  const getCars = async () => {
-    const response = await axios.get('/api/cars');
+  const loaderData: ICar = useLoaderData() as ICar;
+  const rows = Object.keys(loaderData).length > 0 ? loaderData : [];
+  const rowsData: ICar[] = Array.isArray(rows) ? rows : [rows];
 
-    return response.data;
-  };
-
-  console.log(getCars());
+  console.log(loaderData);
 
   const columns: GridColDef[] = [
     {
@@ -32,8 +27,7 @@ const Shop = () => {
         defaultMessage: 'Make',
       }),
       minWidth: minWidth,
-      valueGetter: (params) =>
-        params.row.car?.make ? params.row.car.make : '',
+      valueGetter: (params) => (params.row.make ? params.row.make : ''),
     },
     {
       field: 'model',
@@ -42,8 +36,7 @@ const Shop = () => {
         defaultMessage: 'Model',
       }),
       minWidth: minWidth,
-      valueGetter: (params) =>
-        params.row.car?.model ? params.row.car.model : '',
+      valueGetter: (params) => (params.row.model ? params.row.model : ''),
     },
     {
       field: 'year',
@@ -52,9 +45,7 @@ const Shop = () => {
         defaultMessage: 'Year',
       }),
       minWidth: minWidth,
-      valueGetter: (params) =>
-        params.row.car?.year ? params.row.car.year : '',
-
+      valueGetter: (params) => (params.row.year ? params.row.year : ''),
       type: 'number',
     },
     {
@@ -66,7 +57,7 @@ const Shop = () => {
       minWidth: minWidth,
       type: 'number',
       valueGetter: (params) =>
-        params.row.car?.mileageColumn ? params.row.car.mileageColumn : '',
+        params.row.mileageColumn ? params.row.mileageColumn : '',
     },
     {
       field: 'fuelColumn',
@@ -76,7 +67,7 @@ const Shop = () => {
       }),
       minWidth: minWidth,
       valueGetter: (params) =>
-        params.row.car?.fuelColumn ? params.row.car.fuelColumn : '',
+        params.row.fuelColumn ? params.row.fuelColumn : '',
     },
     {
       field: 'bhpColumn',
@@ -87,7 +78,7 @@ const Shop = () => {
       minWidth: minWidth,
       type: 'number',
       valueGetter: (params) =>
-        params.row.car?.bhpColumn ? params.row.car.bhpColumn : '',
+        params.row.bhpColumn ? params.row.bhpColumn : '',
     },
     {
       field: 'city',
@@ -96,8 +87,7 @@ const Shop = () => {
         defaultMessage: 'City',
       }),
       minWidth: minWidth,
-      valueGetter: (params) =>
-        params.row.car?.city ? params.row.car.city : '',
+      valueGetter: (params) => (params.row.city ? params.row.city : ''),
     },
     {
       field: 'country',
@@ -106,8 +96,7 @@ const Shop = () => {
         defaultMessage: 'Country',
       }),
       minWidth: minWidth,
-      valueGetter: (params) =>
-        params.row.car?.country ? params.row.car.country : '',
+      valueGetter: (params) => (params.row.country ? params.row.country : ''),
     },
     {
       field: 'price',
@@ -117,8 +106,7 @@ const Shop = () => {
       }),
       minWidth: minWidth,
       type: 'number',
-      valueGetter: (params) =>
-        params.row.car?.price ? params.row.car.price : '',
+      valueGetter: (params) => (params.row.price ? params.row.price : ''),
     },
     {
       field: 'description',
@@ -128,8 +116,9 @@ const Shop = () => {
       }),
       minWidth: minWidth,
       valueGetter: (params) =>
-        params.row.car?.description ? params.row.car.description : '',
+        params.row.description ? params.row.description : '',
     },
+
     {
       field: 'datePosted',
       headerName: intl.formatMessage({ id: 'timestamp.datePosted' }),
@@ -174,7 +163,7 @@ const Shop = () => {
     <main>
       <Box sx={{ height: '100%', width: '100%' }}>
         <DataGrid
-          rows={rows}
+          rows={rowsData}
           columns={columns}
           initialState={{
             pagination: {

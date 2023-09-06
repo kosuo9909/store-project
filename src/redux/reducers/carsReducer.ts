@@ -12,6 +12,11 @@ interface EditCarPayload {
   updatedCar: Partial<ICar>;
 }
 
+interface EditCarArgs {
+  carObj: Partial<ICar>;
+  carID: Partial<ICar>;
+}
+
 const initialState: CarState = {
   value: [],
   selectedCar: undefined,
@@ -46,41 +51,77 @@ export const carSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(postCars.fulfilled, (state, action) => {
-      console.log('builder');
-    });
+    builder
+      .addCase(postCars.fulfilled, (state, action) => {
+        console.log('This would do something once postCars is intercepted');
+      })
+      .addCase(fetchCars.fulfilled, (state, action) => {
+        console.log('This would do something once fetchCars is intercepted');
+      })
+      .addCase(removeCarAPI.fulfilled, (state, action) => {
+        console.log('This would do something once removeCarAPI is intercepted');
+      })
+      .addCase(editCars.fulfilled, (state, action) => {
+        console.log('This would do something once editCars is intercepted');
+      });
   },
 });
 
 export const fetchCars = createAsyncThunk('cars/fetchCars', async () => {
-  const response = await axios.get('/api/cars');
-
-  return response.data;
+  try {
+    const response = await axios.get('/api/cars');
+    return response.data;
+  } catch (error) {
+    if (error instanceof Error) {
+      return error.message;
+    }
+  }
 });
+
+interface EditCarArgs {
+  carObj: Partial<ICar>;
+  carID: Partial<ICar>;
+}
 
 export const editCars = createAsyncThunk(
   'cars/editCars/',
-  async (carID: Partial<ICar>) => {
-    const response = await axios.put(`/api/cars/${carID}`);
-
-    return response.data;
+  async ({ carObj, carID }: EditCarArgs) => {
+    try {
+      const response = await axios.put(`/api/cars/${carID}`, carObj);
+      return response.data;
+    } catch (error) {
+      if (error instanceof Error) {
+        return error.message;
+      }
+    }
   },
 );
-export const removeCarAPI = createAsyncThunk(
-  'cars/editCars/',
-  async (carID: Partial<ICar>) => {
-    const response = await axios.delete(`/api/cars/${carID}`);
 
-    return response.data;
+export const removeCarAPI = createAsyncThunk(
+  'cars/removeCars/',
+  async (carID: Partial<ICar>) => {
+    try {
+      const response = await axios.delete(`/api/cars/${carID}`);
+      return response.data;
+    } catch (error) {
+      if (error instanceof Error) {
+        return error.message;
+      }
+    }
   },
 );
 
 export const postCars = createAsyncThunk(
   'cars/postCars',
   async (carObj: Partial<ICar>) => {
-    const response = await axios.post('/api/cars', carObj);
-
-    return response.data;
+    try {
+      const response = await axios.post('/api/cars', carObj);
+      return response.data;
+    } catch (error) {
+      if (error instanceof Error) {
+        return error.message;
+      }
+    }
   },
 );
 
