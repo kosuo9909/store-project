@@ -12,12 +12,9 @@ const Shop = () => {
   const dispatch = useDispatch();
   const intl = useIntl();
   const minWidth = 140;
-
   const loaderData: ICar = useLoaderData() as ICar;
   const rows = Object.keys(loaderData).length > 0 ? loaderData : [];
   const rowsData: ICar[] = Array.isArray(rows) ? rows : [rows];
-
-  console.log(loaderData);
 
   const columns: GridColDef[] = [
     {

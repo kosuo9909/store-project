@@ -10,7 +10,7 @@ export const setupMirageServer = () => {
         return storedCars ? JSON.parse(storedCars) : [];
       });
 
-      this.post('/api/cars', (schema, request) => {
+      this.post('/api/cars', (_, request) => {
         const myID = v4();
         const newCar = JSON.parse(request.requestBody);
         const carWithDateAndID = {

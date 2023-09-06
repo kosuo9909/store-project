@@ -66,9 +66,7 @@ const useFormBuilder = <T extends Record<string, string | number>>({
       context,
     ],
   );
-  useEffect(() => {
-    console.log('OnSubmitChanged');
-  }, [onSubmit]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({

@@ -36,9 +36,14 @@ const router = createBrowserRouter([
         path: '/',
         element: <Shop />,
         loader: async () => {
-          const response = await axios.get('/api/cars');
-
-          return response.data;
+          try {
+            const response = await axios.get('/api/cars');
+            return response.data;
+          } catch (error) {
+            if (error instanceof Error) {
+              return error.message;
+            }
+          }
         },
       },
       { path: 'add', element: <AddVehicle addOrEdit="add" /> },
