@@ -3,6 +3,13 @@ import { IntlShape } from 'react-intl';
 export const formatTimeElapsed = (date: Date | string, intl: IntlShape) => {
   const dateObject = new Date(date);
   const now = new Date();
+  const dateObjectConfig: Intl.DateTimeFormatOptions = {
+    day: '2-digit',
+    month: '2-digit',
+    year: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+  };
   const timeElapsedInSeconds = Math.floor(
     (now.getTime() - dateObject.getTime()) / 1000,
   );
@@ -27,11 +34,5 @@ export const formatTimeElapsed = (date: Date | string, intl: IntlShape) => {
     );
   }
 
-  return `${intl.formatDate(dateObject, {
-    day: '2-digit',
-    month: '2-digit',
-    year: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-  })}`;
+  return `${intl.formatDate(dateObject, dateObjectConfig)}`;
 };
