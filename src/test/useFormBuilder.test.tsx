@@ -4,7 +4,6 @@ import { renderHook } from '@testing-library/react';
 import { IntlProvider } from 'react-intl';
 import { act } from 'react-dom/test-utils';
 import { carValidationConfig } from '../helpers/validationConfigs';
-import { carTextFields } from '../helpers/carFields';
 
 describe('useFormBuilder', () => {
   let wrapper: React.FC<MemoryRouterProps>;
@@ -102,7 +101,7 @@ describe('useFormBuilder', () => {
         useFormBuilder({
           initialData,
           validationConfig: carValidationConfig,
-          textFields: carTextFields,
+          textFields: {},
           onSubmit: mockOnSubmit,
           context: '',
         }),
@@ -115,8 +114,8 @@ describe('useFormBuilder', () => {
       } as unknown as React.MouseEvent<HTMLButtonElement>);
     });
     expect(mockOnSubmit).toHaveBeenCalledTimes(0);
-    expect(result.current.validationErrors.price).toEqual(
-      '.price must be a number.',
+    expect(result.current.validationErrors.make).toEqual(
+      '.make cannot be empty.',
     );
   });
 
