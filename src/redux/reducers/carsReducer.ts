@@ -13,8 +13,8 @@ interface EditCarPayload {
 }
 
 interface EditCarArgs {
-  carObj: Partial<ICar>;
-  carID: Partial<ICar>;
+  updatedCar: Partial<ICar>;
+  carID: string;
 }
 
 const initialState: CarState = {
@@ -78,16 +78,11 @@ export const fetchCars = createAsyncThunk('cars/fetchCars', async () => {
   }
 });
 
-interface EditCarArgs {
-  carObj: Partial<ICar>;
-  carID: Partial<ICar>;
-}
-
 export const editCars = createAsyncThunk(
   'cars/editCars/',
-  async ({ carObj, carID }: EditCarArgs) => {
+  async ({ updatedCar, carID }: EditCarArgs) => {
     try {
-      const response = await axios.put(`/api/cars/${carID}`, carObj);
+      const response = await axios.put('/api/cars/', { updatedCar, carID });
       return response.data;
     } catch (error) {
       if (error instanceof Error) {

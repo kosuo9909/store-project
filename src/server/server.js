@@ -27,13 +27,12 @@ export const setupMirageServer = () => {
 
       this.put('/api/cars', (_, request) => {
         const storedCars = JSON.parse(localStorage.getItem('cars') || '[]');
-        const updatedCar = JSON.parse(request.requestBody);
-        const id = updatedCar.id;
-
-        const carIndex = storedCars.findIndex((item) => item.id === id);
+        const { carID, updatedCar } = JSON.parse(request.requestBody);
+        console.log(`id ${carID} and ${updatedCar}`);
+        const carIndex = storedCars.findIndex((item) => item.id === carID);
 
         if (carIndex !== -1) {
-          storedCars.value[carIndex] = {
+          storedCars[carIndex] = {
             ...storedCars[carIndex],
             ...updatedCar,
           };
