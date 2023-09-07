@@ -1,20 +1,25 @@
 import Box from '@mui/material/Box';
 import { DataGrid, GridCellParams, GridColDef } from '@mui/x-data-grid';
-import { useDispatch } from 'react-redux';
-import { Link, useLoaderData } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
-import { selectCar } from '../redux/reducers/carsReducer';
+import { fetchCars, selectCar } from '../redux/reducers/carsReducer';
 import { useIntl } from 'react-intl';
 import { formatTimeElapsed } from '../helpers/formatTimeElapsed';
 import { ICar } from '../interfaces/interfaces';
+import { useEffect } from 'react';
+import { AppDispatch, RootState } from '../store/store';
 
 const Shop = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
+  const storedCars = useSelector((state: RootState) => state.cars.value);
   const intl = useIntl();
   const minWidth = 140;
-  const loaderData: ICar = useLoaderData() as ICar;
-  const rows = Object.keys(loaderData).length > 0 ? loaderData : [];
-  const rowsData: ICar[] = Array.isArray(rows) ? rows : [rows];
+  const rowsData: ICar[] = storedCars;
+
+  useEffect(() => {
+    dispatch(fetchCars());
+  }, [dispatch]);
 
   const columns: GridColDef[] = [
     {

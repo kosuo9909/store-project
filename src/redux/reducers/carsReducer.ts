@@ -56,7 +56,7 @@ export const carSlice = createSlice({
         console.log('This would do something once postCars is intercepted');
       })
       .addCase(fetchCars.fulfilled, (state, action) => {
-        console.log('This would do something once fetchCars is intercepted');
+        state.value = action.payload;
       })
       .addCase(removeCarAPI.fulfilled, (state, action) => {
         console.log('This would do something once removeCarAPI is intercepted');
@@ -99,7 +99,7 @@ export const editCars = createAsyncThunk(
 
 export const removeCarAPI = createAsyncThunk(
   'cars/removeCars/',
-  async (carID: Partial<ICar>) => {
+  async (carID: string) => {
     try {
       const response = await axios.delete(`/api/cars/${carID}`);
       return response.data;

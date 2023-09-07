@@ -21,6 +21,36 @@ export const setupMirageServer = () => {
         const storedCars = JSON.parse(localStorage.getItem('cars') || '[]');
         storedCars.push(carWithDateAndID);
         localStorage.setItem('cars', JSON.stringify(storedCars));
+
+        return '200';
+      });
+
+      this.put('/api/cars', (_, request) => {
+        const storedCars = JSON.parse(localStorage.getItem('cars') || '[]');
+        const updatedCar = JSON.parse(request.requestBody);
+        const id = updatedCar.id;
+
+        const carIndex = storedCars.findIndex((item) => item.id === id);
+
+        if (carIndex !== -1) {
+          storedCars.value[carIndex] = {
+            ...storedCars[carIndex],
+            ...updatedCar,
+          };
+        }
+
+        localStorage.setItem('cars', JSON.stringify(storedCars));
+
+        return '200';
+      });
+
+      this.delete('/api/cars/:id', (_, request) => {
+        const storedCars = JSON.parse(localStorage.getItem('cars') || '[]');
+        const updatedCars = storedCars.filter(
+          (car) => car.id !== request.params.id,
+        );
+        localStorage.setItem('cars', JSON.stringify(updatedCars));
+
         return '200';
       });
     },

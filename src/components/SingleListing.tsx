@@ -7,9 +7,10 @@ import Typography from '@mui/material/Typography';
 import { ICar } from '../interfaces/interfaces';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { removeCar, selectCar } from '../redux/reducers/carsReducer';
+import { removeCarAPI, selectCar } from '../redux/reducers/carsReducer';
 import React from 'react';
 import { FormattedDate, useIntl } from 'react-intl';
+import { AppDispatch } from '../store/store';
 
 interface SingleListingProps {
   car: ICar;
@@ -18,7 +19,7 @@ interface SingleListingProps {
 
 export default function SingleListing({ car, button }: SingleListingProps) {
   const intl = useIntl();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleViewCar = (id: string) => {
     dispatch(selectCar(id));
@@ -28,7 +29,7 @@ export default function SingleListing({ car, button }: SingleListingProps) {
 
   const handleRemove = (id: string, e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    dispatch(removeCar(id));
+    dispatch(removeCarAPI(id));
     navigate('/');
   };
 

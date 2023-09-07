@@ -12,7 +12,6 @@ import { ThemeProvider } from '@emotion/react';
 import App from './App';
 import User from './components/User';
 import { setupMirageServer } from './server/server';
-import { fetchCars } from './redux/reducers/carsReducer';
 
 setupMirageServer();
 
@@ -35,7 +34,6 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Shop />,
-        loader: fetchCars,
       },
       { path: 'add', element: <AddVehicle addOrEdit="add" /> },
       { path: 'edit', element: <AddVehicle addOrEdit="edit" /> },
