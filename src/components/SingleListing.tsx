@@ -20,8 +20,6 @@ interface SingleListingProps {
 export default function SingleListing({ car, button }: SingleListingProps) {
   const intl = useIntl();
   const dispatch = useDispatch<AppDispatch>();
-
-  console.log(car);
   const handleViewCar = (id: string) => {
     dispatch(selectCar(id));
   };
