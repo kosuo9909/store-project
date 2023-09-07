@@ -12,7 +12,7 @@ import { ThemeProvider } from '@emotion/react';
 import App from './App';
 import User from './components/User';
 import { setupMirageServer } from './server/server';
-import axios from 'axios';
+import { fetchCars } from './redux/reducers/carsReducer';
 
 setupMirageServer();
 
@@ -35,16 +35,7 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Shop />,
-        loader: async () => {
-          try {
-            const response = await axios.get('/api/cars');
-            return response.data;
-          } catch (error) {
-            if (error instanceof Error) {
-              return error.message;
-            }
-          }
-        },
+        loader: fetchCars,
       },
       { path: 'add', element: <AddVehicle addOrEdit="add" /> },
       { path: 'edit', element: <AddVehicle addOrEdit="edit" /> },
