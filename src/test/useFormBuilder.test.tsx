@@ -4,6 +4,7 @@ import { renderHook } from '@testing-library/react';
 import { IntlProvider } from 'react-intl';
 import { act } from 'react-dom/test-utils';
 import { carValidationConfig } from '../helpers/validationConfigs';
+import { carTextFields } from '../helpers/carFields';
 
 describe('useFormBuilder', () => {
   let wrapper: React.FC<MemoryRouterProps>;
@@ -14,6 +15,9 @@ describe('useFormBuilder', () => {
         <MemoryRouter>{children}</MemoryRouter>
       </IntlProvider>
     );
+  });
+
+  beforeEach(() => {
     mockOnSubmit = jest.fn();
   });
 
@@ -91,28 +95,29 @@ describe('useFormBuilder', () => {
     expect(result.current.formData).toEqual({});
   });
 
-  it('should set validation errors if the form is invalid', () => {
+  it('should set validation errors if the form is invalid', async () => {
     const initialData = { make: '' };
     const { result } = renderHook(
       () =>
         useFormBuilder({
           initialData,
           validationConfig: carValidationConfig,
-          textFields: {},
+          textFields: carTextFields,
           onSubmit: mockOnSubmit,
           context: '',
         }),
       { wrapper },
     );
 
-    act(() => {
+    await act(() => {
       result.current.handleFormAction({
         preventDefault: jest.fn(),
       } as unknown as React.MouseEvent<HTMLButtonElement>);
-
-      console.log(result.current);
-      console.log('wwwwwwwwwwwwwwwwwwwwww');
     });
+    expect(mockOnSubmit).toHaveBeenCalledTimes(0);
+    expect(result.current.validationErrors.price).toEqual(
+      '.price must be a number.',
+    );
   });
 
   it('should update formData when isEditing and editedData changes', () => {
