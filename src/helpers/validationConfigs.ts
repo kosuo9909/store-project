@@ -19,6 +19,7 @@ export const carValidationConfig: Record<string, ValidatorFuncSignature[]> = {
   country: [isRequired],
   description: [isRequired],
 };
+
 export const userValidationConfig: Record<string, ValidatorFuncSignature[]> = {
   name: [isRequired],
   lastName: [isRequired],
@@ -47,6 +48,7 @@ export const getFormatMessageConfig = (
         },
         { fieldName },
       );
+
     case 'mustBeNumber':
       return intl.formatMessage(
         {
@@ -55,6 +57,7 @@ export const getFormatMessageConfig = (
         },
         { fieldName },
       );
+
     case 'mustBePositive':
       return intl.formatMessage(
         {
@@ -63,6 +66,7 @@ export const getFormatMessageConfig = (
         },
         { fieldName },
       );
+
     case 'isWithinRange':
       return intl.formatMessage(
         {

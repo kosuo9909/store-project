@@ -87,6 +87,10 @@ export const carSlice = createSlice({
       })
       .addCase(removeCarAPI.fulfilled, (state, action) => {
         console.log('This would do something once removeCarAPI is intercepted');
+        return {
+          ...state,
+          selectedCar: undefined,
+        };
       })
       .addCase(editCars.fulfilled, (state, action) => {
         console.log('This would do something once editCars is intercepted');
