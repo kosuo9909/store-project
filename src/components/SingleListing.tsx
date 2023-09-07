@@ -21,6 +21,7 @@ export default function SingleListing({ car, button }: SingleListingProps) {
   const intl = useIntl();
   const dispatch = useDispatch<AppDispatch>();
 
+  console.log(car);
   const handleViewCar = (id: string) => {
     dispatch(selectCar(id));
   };
@@ -56,7 +57,7 @@ export default function SingleListing({ car, button }: SingleListingProps) {
           <Typography variant="body2" sx={typographySxProps}>
             {intl.formatMessage(
               { id: 'mileage', defaultMessage: 'Mileage - {mileageValue}' },
-              { mileageValue: car.mileage },
+              { mileageValue: car.mileageColumn },
             )}
           </Typography>
           <Typography variant="body2" sx={typographySxProps}>
@@ -71,13 +72,13 @@ export default function SingleListing({ car, button }: SingleListingProps) {
           <Typography variant="body2" sx={typographySxProps}>
             {intl.formatMessage(
               { id: 'fuel', defaultMessage: 'Fuel type - {fuelType}' },
-              { fuelType: car.fuel },
+              { fuelType: car.fuelColumn },
             )}
           </Typography>
           <Typography variant="body2" sx={typographySxProps}>
             {intl.formatMessage(
               { id: 'bhp', defaultMessage: 'Horsepower - {bhpValue}' },
-              { bhpValue: car.bhp },
+              { bhpValue: car.bhpColumn },
             )}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>

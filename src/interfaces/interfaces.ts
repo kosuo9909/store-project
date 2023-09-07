@@ -6,9 +6,9 @@ export interface ICar {
   make: string;
   model: string;
   year: number;
-  mileage: number;
-  fuel: string;
-  bhp: number;
+  mileageColumn: number;
+  fuelColumn: string;
+  bhpColumn: number;
   city: string;
   country: string;
   price: number;
