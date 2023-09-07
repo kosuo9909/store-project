@@ -5,14 +5,18 @@ import { IntlProvider } from 'react-intl';
 import { act } from 'react-dom/test-utils';
 
 describe('useFormBuilder', () => {
-  const wrapper = ({ children }: MemoryRouterProps) => (
-    <IntlProvider locale="en">
-      <MemoryRouter>{children}</MemoryRouter>
-    </IntlProvider>
-  );
-  const mockOnSubmit = jest.fn();
+  let wrapper: React.FC<MemoryRouterProps>;
+  let mockOnSubmit: jest.Mock;
+  beforeEach(() => {
+    wrapper = ({ children }: MemoryRouterProps) => (
+      <IntlProvider locale="en">
+        <MemoryRouter>{children}</MemoryRouter>
+      </IntlProvider>
+    );
+    mockOnSubmit = jest.fn();
+  });
 
-  it('shoult have the correct initial state (empty)', () => {
+  it('should have the correct initial state (empty)', () => {
     const initialData = { name: '', age: '' };
 
     const { result } = renderHook(

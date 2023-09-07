@@ -21,7 +21,8 @@ const App = () => {
     const currentLocaleChangeCall = localeChangeCall.current;
 
     localeChangeCall.current += 1;
-
+    const MAX_RETRIES = 3;
+    const RETRY_DELAY = 200;
     const loadLangData = async () => {
       try {
         const langJSON = await import(`../src/lang/${locale}.json`);
@@ -32,10 +33,10 @@ const App = () => {
         }
       } catch (error) {
         if (
-          currentRetryCount < 3 &&
+          currentRetryCount < MAX_RETRIES &&
           currentLocaleChangeCall === localeChangeCall.current - 1
         ) {
-          await delay(200);
+          await delay(RETRY_DELAY);
           currentRetryCount++;
           loadLangData();
           setIsLoadLangSuccessful(false);
