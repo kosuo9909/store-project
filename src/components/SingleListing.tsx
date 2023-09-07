@@ -49,21 +49,27 @@ export default function SingleListing({ car, button }: SingleListingProps) {
             <FormattedDate value={car.datePosted} />
           </Typography>
           <Typography variant="h5" component="div" sx={typographySxProps}>
-            {car.make} {car.model}
+            {intl.formatMessage(
+              { id: 'car.makeAndModel', defaultMessage: '{make} {model}' },
+              { make: car.make, model: car.model },
+            )}
           </Typography>
           <Typography sx={typographySxProps} color="text.secondary">
-            {car.price} USD
+            {intl.formatMessage(
+              { id: 'car.price.listing', defaultMessage: '{price} USD' },
+              { price: car.price },
+            )}
           </Typography>
           <Typography variant="body2" sx={typographySxProps}>
             {intl.formatMessage(
-              { id: 'mileage', defaultMessage: 'Mileage - {mileageValue}' },
+              { id: 'car.mileage', defaultMessage: 'Mileage - {mileageValue}' },
               { mileageValue: car.mileageColumn },
             )}
           </Typography>
           <Typography variant="body2" sx={typographySxProps}>
             {intl.formatMessage(
               {
-                id: 'yearOfProduction',
+                id: 'car.yearOfProduction',
                 defaultMessage: 'Year of production - {year}',
               },
               { year: car.year },
@@ -71,26 +77,32 @@ export default function SingleListing({ car, button }: SingleListingProps) {
           </Typography>
           <Typography variant="body2" sx={typographySxProps}>
             {intl.formatMessage(
-              { id: 'fuel', defaultMessage: 'Fuel type - {fuelType}' },
+              { id: 'car.fuel', defaultMessage: 'Fuel type - {fuelType}' },
               { fuelType: car.fuelColumn },
             )}
           </Typography>
           <Typography variant="body2" sx={typographySxProps}>
             {intl.formatMessage(
-              { id: 'bhp', defaultMessage: 'Horsepower - {bhpValue}' },
+              { id: 'car.bhp', defaultMessage: 'Horsepower - {bhpValue}' },
               { bhpValue: car.bhpColumn },
             )}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
             {intl.formatMessage({
-              id: 'description',
+              id: 'car.description',
               defaultMessage: 'Description',
             })}{' '}
             <br></br>
             {car.description}
           </Typography>
           <Typography variant="body2" sx={typographySxProps}>
-            {car.city}, {car.country}
+            {intl.formatMessage(
+              {
+                id: 'car.listing.cityAndCountry',
+                defaultMessage: '{city} {country}',
+              },
+              { city: car.city, country: car.country },
+            )}
           </Typography>
         </CardContent>
         <CardActions>
@@ -98,7 +110,7 @@ export default function SingleListing({ car, button }: SingleListingProps) {
             <Link to={`/${car.id}`}>
               <Button onClick={() => handleViewCar(car.id)} size="small">
                 {intl.formatMessage({
-                  id: 'viewlisting',
+                  id: 'button.viewListing',
                   defaultMessage: 'View Listing',
                 })}
               </Button>
@@ -108,11 +120,17 @@ export default function SingleListing({ car, button }: SingleListingProps) {
             <>
               <Link to="/edit">
                 <Button onClick={() => handleViewCar(car.id)} size="small">
-                  {intl.formatMessage({ id: 'edit', defaultMessage: 'Edit' })}
+                  {intl.formatMessage({
+                    id: 'button.edit',
+                    defaultMessage: 'Edit',
+                  })}
                 </Button>
               </Link>
               <Button onClick={(e) => handleRemove(car.id, e)} size="small">
-                {intl.formatMessage({ id: 'remove', defaultMessage: 'Remove' })}
+                {intl.formatMessage({
+                  id: 'button.remove',
+                  defaultMessage: 'Remove',
+                })}
               </Button>
             </>
           )}
