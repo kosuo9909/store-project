@@ -37,6 +37,6 @@ describe('SingleListing Component', () => {
     };
     render(<SingleListing car={car} button="view" />, { wrapper });
 
-    expect(screen.getByTestId('make-model')).toHaveTextContent('Make Model');
+    expect(screen.getByTestId('make-model')).toHaveTextContent('Make Models');
   });
 });
