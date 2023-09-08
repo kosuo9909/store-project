@@ -46,7 +46,12 @@ export default function SingleListing({ car, button }: SingleListingProps) {
           <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
             <FormattedDate value={car.datePosted} />
           </Typography>
-          <Typography variant="h5" component="div" sx={typographySxProps}>
+          <Typography
+            variant="h5"
+            component="div"
+            sx={typographySxProps}
+            data-testid="make-model"
+          >
             {intl.formatMessage(
               { id: 'car.makeAndModel', defaultMessage: '{make} {model}' },
               { make: car.make, model: car.model },

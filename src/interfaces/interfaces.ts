@@ -2,7 +2,7 @@ import { ValidatorFuncSignature } from '../helpers/validationFuncs';
 
 export interface ICar {
   id: string;
-  datePosted: string;
+  datePosted?: string;
   make: string;
   model: string;
   year: number;

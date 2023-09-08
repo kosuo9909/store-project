@@ -20,6 +20,10 @@ describe('useFormBuilder', () => {
     mockOnSubmit = jest.fn();
   });
 
+  afterEach(() => {
+    mockOnSubmit.mockReset();
+  });
+
   it('should have the correct initial state (empty)', () => {
     const initialData = { name: '', age: '' };
 
