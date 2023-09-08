@@ -12,7 +12,7 @@
   "button.submit": "Изпрати",
   "button.remove": "Изтрий",
   "button.viewListing": "Виж обявата",
-  "timestamp.addedJustNow": "Добавен току-що.",
+  "timestamp.addedNow": "Добавен току-що.",
   "timestamp.addedSecondsAgo": "Добавена преди {seconds, plural, one {# секунда} other {# минута}}.",
   "timestamp.addedMinutesAgo": "Добавена преди {minutes, plural, one {# минута} other {# минути}}.",
   "timestamp.datePosted": "Качена на",

@@ -37,6 +37,13 @@ describe('SingleListing Component', () => {
     };
     render(<SingleListing car={car} button="view" />, { wrapper });
 
-    expect(screen.getByTestId('make-model')).toHaveTextContent('Make Models');
+    expect(screen.getByText(/Make Model/)).toBeInTheDocument();
+    expect(screen.getByText(/2012/)).toBeInTheDocument();
+    expect(screen.getByText(/200000/)).toBeInTheDocument();
+    expect(screen.getByText(/Fuel/)).toBeInTheDocument();
+    expect(screen.getByText(/110/)).toBeInTheDocument();
+    expect(screen.getByText(/City Country/)).toBeInTheDocument();
+    expect(screen.getByText(/10900 USD/)).toBeInTheDocument();
+    expect(screen.getByText(/Description/)).toBeInTheDocument();
   });
 });
