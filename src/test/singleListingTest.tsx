@@ -6,7 +6,7 @@ import { store } from '../store/store';
 import { Provider } from 'react-redux';
 import '@testing-library/jest-dom';
 
-describe('CarDetail Component', () => {
+describe('SingleListing Component', () => {
   let wrapper: React.FC<MemoryRouterProps>;
 
   beforeEach(() => {
