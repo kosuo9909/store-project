@@ -5,9 +5,11 @@ import { IntlProvider } from 'react-intl';
 import { store } from '../store/store';
 import { Provider } from 'react-redux';
 import '@testing-library/jest-dom';
+import { ICar } from '../interfaces/interfaces';
 
 describe('SingleListing Component', () => {
   let wrapper: React.FC<MemoryRouterProps>;
+  let car: ICar;
 
   beforeEach(() => {
     wrapper = ({ children }: MemoryRouterProps) => (
@@ -18,11 +20,9 @@ describe('SingleListing Component', () => {
       </Provider>
     );
   });
-  afterEach(() => {
-    cleanup();
-  });
-  it('should render the car details', () => {
-    const car = {
+
+  beforeEach(() => {
+    car = {
       make: 'Make',
       id: '5',
       model: 'Model',
@@ -35,6 +35,11 @@ describe('SingleListing Component', () => {
       price: 10900,
       description: 'Description',
     };
+  });
+  afterEach(() => {
+    cleanup();
+  });
+  it('should render the car details', () => {
     render(<SingleListing car={car} button="view" />, { wrapper });
 
     expect(screen.getByText(/Make Model/)).toBeInTheDocument();
